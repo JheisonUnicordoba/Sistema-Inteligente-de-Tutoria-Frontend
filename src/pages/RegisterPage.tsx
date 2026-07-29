@@ -60,7 +60,7 @@ export default function RegisterPage() {
         if (status === 409) {
           setError('Este correo ya está registrado')
         } else {
-          setError('Error al crear la cuenta. Intenta nuevamente.')
+          setError(err.response?.data?.detail[0]?.msg)
         }
       } else {
         setError('Error al conectar con el servidor')
@@ -164,11 +164,10 @@ export default function RegisterPage() {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="••••••••"
-                className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 transition ${
-                  confirmPassword.length > 0 && confirmPassword !== password
-                    ? 'border-red-400 focus:border-red-400'
-                    : 'border-gray-300 focus:border-primary-500'
-                }`}
+                className={`w-full rounded-lg border px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 transition ${confirmPassword.length > 0 && confirmPassword !== password
+                  ? 'border-red-400 focus:border-red-400'
+                  : 'border-gray-300 focus:border-primary-500'
+                  }`}
               />
               {confirmPassword.length > 0 && confirmPassword !== password && (
                 <p className="mt-1 text-xs text-red-600">Las contraseñas no coinciden</p>
