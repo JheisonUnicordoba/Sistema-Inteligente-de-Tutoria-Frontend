@@ -259,14 +259,14 @@ function ViewBienvenida({ onIniciar, iniciando, error }: ViewBienvenidaProps) {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <header className="bg-white border-b border-gray-200 shadow-sm">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
+      <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center gap-3">
           <Link to="/dashboard" className="flex items-center gap-3 group">
             <div className="w-9 h-9 bg-primary-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-base">T</span>
             </div>
-            <span className="text-lg font-semibold text-gray-900 group-hover:text-primary-700 transition">
+            <span className="text-lg font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-700 dark:group-hover:text-primary-400 transition">
               TutorIA Saber Pro
             </span>
           </Link>
@@ -274,13 +274,13 @@ function ViewBienvenida({ onIniciar, iniciando, error }: ViewBienvenidaProps) {
       </header>
 
       <main className="flex-1 flex items-center justify-center px-4 py-12">
-        <div className="w-full max-w-lg bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
+        <div className="w-full max-w-lg bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-8">
           <div className="text-center mb-6">
-            <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <div className="w-14 h-14 bg-primary-50 dark:bg-primary-900/30 rounded-2xl flex items-center justify-center mx-auto mb-4">
               <span className="text-3xl">?</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">Diagnóstico Inicial</h1>
-            <p className="mt-2 text-sm text-gray-500 leading-relaxed">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Diagnóstico Inicial</h1>
+            <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
               Este diagnóstico evaluará tu nivel en Razonamiento Cuantitativo para Saber Pro.
             </p>
           </div>
@@ -290,27 +290,24 @@ function ViewBienvenida({ onIniciar, iniciando, error }: ViewBienvenidaProps) {
             {infoItems.map((item) => (
               <div
                 key={item.label}
-                className="flex items-center gap-2 bg-gray-50 rounded-xl px-3 py-2.5 border border-gray-100"
+                className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800 rounded-xl px-3 py-2.5 border border-gray-100 dark:border-gray-700"
               >
-                <div className="w-6 h-6 bg-primary-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <span className="text-primary-700 text-xs font-bold">{item.icon}</span>
+                <div className="w-6 h-6 bg-primary-100 dark:bg-primary-900/40 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <span className="text-primary-700 dark:text-primary-400 text-xs font-bold">{item.icon}</span>
                 </div>
-                <span className="text-xs font-medium text-gray-700">{item.label}</span>
+                <span className="text-xs font-medium text-gray-700 dark:text-gray-300">{item.label}</span>
               </div>
             ))}
           </div>
 
           {/* Topics */}
           <div className="mb-6">
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+            <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
               Temas evaluados
             </p>
             <div className="flex flex-wrap gap-2">
               {temas.map((tema) => (
-                <span
-                  key={tema}
-                  className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${temaColor(tema)}`}
-                >
+                <span key={tema} className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${temaColor(tema)}`}>
                   {tema}
                 </span>
               ))}
@@ -318,23 +315,22 @@ function ViewBienvenida({ onIniciar, iniciando, error }: ViewBienvenidaProps) {
           </div>
 
           {/* Important note */}
-          <div className="mb-6 p-3 bg-amber-50 border border-amber-200 rounded-xl">
-            <p className="text-xs text-amber-800 leading-relaxed">
-              <span className="font-semibold">Importante:</span> Este diagnóstico solo puede
-              realizarse una vez. Responde con calma.
+          <div className="mb-6 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
+            <p className="text-xs text-amber-800 dark:text-amber-300 leading-relaxed">
+              <span className="font-semibold">Importante:</span> Este diagnóstico solo puede realizarse una vez. Responde con calma.
             </p>
           </div>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl">
-              <p className="text-xs text-red-700">{error}</p>
+            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
+              <p className="text-xs text-red-700 dark:text-red-400">{error}</p>
             </div>
           )}
 
           <button
             onClick={onIniciar}
             disabled={iniciando}
-            className="w-full py-3 px-4 bg-primary-600 hover:bg-primary-700 disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-xl transition focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+            className="w-full py-3 px-4 bg-primary-600 hover:bg-primary-700 disabled:opacity-60 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-xl transition focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
           >
             {iniciando ? (
               <span className="flex items-center justify-center gap-2">
@@ -380,14 +376,14 @@ function ViewYaRealizado({ sesionHuerfanaId, onFinalizar, finalizando, error }: 
   const huerfana = sesionHuerfanaId !== null
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <header className="bg-white border-b border-gray-200 shadow-sm">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
+      <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center gap-3">
           <Link to="/dashboard" className="flex items-center gap-3 group">
             <div className="w-9 h-9 bg-primary-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-base">T</span>
             </div>
-            <span className="text-lg font-semibold text-gray-900 group-hover:text-primary-700 transition">
+            <span className="text-lg font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-700 dark:group-hover:text-primary-400 transition">
               TutorIA Saber Pro
             </span>
           </Link>
@@ -395,22 +391,22 @@ function ViewYaRealizado({ sesionHuerfanaId, onFinalizar, finalizando, error }: 
       </header>
 
       <main className="flex-1 flex items-center justify-center px-4">
-        <div className="w-full max-w-sm bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center">
-          <div className={`w-14 h-14 ${huerfana ? 'bg-amber-50' : 'bg-green-50'} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
+        <div className="w-full max-w-sm bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-8 text-center">
+          <div className={`w-14 h-14 ${huerfana ? 'bg-amber-50 dark:bg-amber-900/20' : 'bg-green-50 dark:bg-green-900/20'} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
             <span className="text-3xl">{huerfana ? '!' : 'V'}</span>
           </div>
-          <h2 className="text-xl font-bold text-gray-900 mb-2">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
             Ya completaste tu diagnóstico inicial
           </h2>
-          <p className="text-sm text-gray-500 mb-6">
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
             {huerfana
               ? 'Respondiste todas las preguntas pero el análisis IA no se completó. Finaliza el proceso para ver tus resultados.'
               : 'Tu diagnóstico ya fue registrado. Puedes ver tu progreso o continuar practicando.'}
           </p>
 
           {(errorLocal || error) && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-left">
-              <p className="text-xs text-red-700">{errorLocal || error}</p>
+            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-left">
+              <p className="text-xs text-red-700 dark:text-red-400">{errorLocal || error}</p>
             </div>
           )}
 
@@ -439,7 +435,7 @@ function ViewYaRealizado({ sesionHuerfanaId, onFinalizar, finalizando, error }: 
             </button>
             <button
               onClick={() => navigate('/evaluacion')}
-              className="w-full py-2.5 px-4 bg-white hover:bg-gray-50 text-gray-700 text-sm font-semibold rounded-xl border border-gray-300 transition focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+              className="w-full py-2.5 px-4 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm font-semibold rounded-xl border border-gray-300 dark:border-gray-600 transition focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
             >
               Ir a Evaluación Adaptativa
             </button>
@@ -481,38 +477,31 @@ function ViewPregunta({
   const botonDesactivado = !respuestaSeleccionada || enviando
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
       {/* Header bar */}
-      <header className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-10">
+      <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm sticky top-0 z-10">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-gray-700">
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 Pregunta {pregunta.numero} de {pregunta.total}
               </span>
-              <span
-                className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${temaColor(pregunta.tema)}`}
-              >
+              <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium border ${temaColor(pregunta.tema)}`}>
                 {pregunta.tema}
               </span>
             </div>
             {/* Timer */}
-            <div
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-mono font-semibold transition-colors ${
-                timerRojo
-                  ? 'bg-red-100 text-red-700 border border-red-200'
-                  : 'bg-gray-100 text-gray-700 border border-gray-200'
-              }`}
-            >
+            <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-mono font-semibold transition-colors ${
+              timerRojo
+                ? 'bg-red-100 text-red-700 border border-red-200'
+                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700'
+            }`}>
               <span>{formatTime(tiempoRestante)}</span>
             </div>
           </div>
           {/* Progress bar */}
-          <div className="h-1.5 w-full bg-gray-200 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-primary-500 rounded-full transition-all duration-500"
-              style={{ width: `${progresoPct}%` }}
-            />
+          <div className="h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div className="h-full bg-primary-500 rounded-full transition-all duration-500" style={{ width: `${progresoPct}%` }} />
           </div>
         </div>
       </header>
@@ -520,8 +509,8 @@ function ViewPregunta({
       {/* Content */}
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
         {/* Question card */}
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-6">
-          <p className="text-base font-medium text-gray-900 leading-relaxed">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 mb-6">
+          <p className="text-base font-medium text-gray-900 dark:text-gray-100 leading-relaxed">
             {pregunta.enunciado}
           </p>
         </div>
@@ -538,24 +527,18 @@ function ViewPregunta({
                 disabled={enviando}
                 className={`w-full flex items-start gap-3 px-4 py-4 rounded-xl border-2 text-left transition focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 ${
                   seleccionada
-                    ? 'border-primary-500 bg-primary-50'
-                    : 'border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50'
+                    ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20'
+                    : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800'
                 } disabled:cursor-not-allowed disabled:opacity-70`}
               >
-                <span
-                  className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition ${
-                    seleccionada
-                      ? 'bg-primary-500 text-white'
-                      : 'bg-gray-100 text-gray-600'
-                  }`}
-                >
+                <span className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition ${
+                  seleccionada ? 'bg-primary-500 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300'
+                }`}>
                   {letra}
                 </span>
-                <span
-                  className={`text-sm leading-relaxed pt-0.5 ${
-                    seleccionada ? 'text-primary-900 font-medium' : 'text-gray-700'
-                  }`}
-                >
+                <span className={`text-sm leading-relaxed pt-0.5 ${
+                  seleccionada ? 'text-primary-900 dark:text-primary-200 font-medium' : 'text-gray-700 dark:text-gray-300'
+                }`}>
                   {texto}
                 </span>
               </button>
@@ -564,8 +547,8 @@ function ViewPregunta({
         </div>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl">
-            <p className="text-xs text-red-700">{error}</p>
+          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
+            <p className="text-xs text-red-700 dark:text-red-400">{error}</p>
           </div>
         )}
 
@@ -593,15 +576,15 @@ function ViewPregunta({
 
 function ViewProcesando() {
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center">
       <div className="text-center">
         <div className="flex justify-center mb-6">
           <Spinner size={12} />
         </div>
-        <h2 className="text-lg font-semibold text-gray-900 mb-1">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-1">
           Analizando tus resultados con IA...
         </h2>
-        <p className="text-sm text-gray-500">Esto puede tomar unos segundos</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">Esto puede tomar unos segundos</p>
       </div>
     </div>
   )
@@ -627,14 +610,14 @@ function ViewResultados({ resultados }: ViewResultadosProps) {
   }))
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <header className="bg-white border-b border-gray-200 shadow-sm">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
+      <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center gap-3">
           <Link to="/dashboard" className="flex items-center gap-3 group">
             <div className="w-9 h-9 bg-primary-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-base">T</span>
             </div>
-            <span className="text-lg font-semibold text-gray-900 group-hover:text-primary-700 transition">
+            <span className="text-lg font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-700 dark:group-hover:text-primary-400 transition">
               TutorIA Saber Pro
             </span>
           </Link>
@@ -643,45 +626,35 @@ function ViewResultados({ resultados }: ViewResultadosProps) {
 
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Resultados del Diagnóstico</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-4">Resultados del Diagnóstico</h1>
 
           {/* Level badge */}
           <div className="flex justify-center mb-4">
-            <span
-              className={`inline-flex items-center px-4 py-1.5 rounded-full text-sm font-bold ${nivelBadgeClass(perfil.nivel)}`}
-            >
+            <span className={`inline-flex items-center px-4 py-1.5 rounded-full text-sm font-bold ${nivelBadgeClass(perfil.nivel)}`}>
               Nivel: {perfil.nivel}
             </span>
           </div>
 
           {/* Score circle */}
-          <div className="inline-flex items-center justify-center w-28 h-28 rounded-full bg-primary-50 border-4 border-primary-200 mb-3">
-            <span className="text-3xl font-extrabold text-primary-700">{puntajePct}%</span>
+          <div className="inline-flex items-center justify-center w-28 h-28 rounded-full bg-primary-50 dark:bg-primary-900/30 border-4 border-primary-200 dark:border-primary-800 mb-3">
+            <span className="text-3xl font-extrabold text-primary-700 dark:text-primary-400">{puntajePct}%</span>
           </div>
 
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             {correctas} de {total} respuestas correctas
           </p>
         </div>
 
         {/* Radar chart */}
         {radarData.length > 0 && (
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-6">
-            <h2 className="text-sm font-semibold text-gray-700 mb-4">Desempeño por tema</h2>
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 mb-6">
+            <h2 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4">Desempeño por tema</h2>
             <ResponsiveContainer width="100%" height={280}>
               <RadarChart data={radarData}>
                 <PolarGrid />
                 <PolarAngleAxis dataKey="tema" tick={{ fontSize: 12, fill: '#6b7280' }} />
-                <Radar
-                  name="Puntaje"
-                  dataKey="puntaje"
-                  stroke="#3b82f6"
-                  fill="#3b82f6"
-                  fillOpacity={0.4}
-                />
-                <Tooltip
-                  formatter={(value: number | string) => [`${value}%`, 'Puntaje']}
-                />
+                <Radar name="Puntaje" dataKey="puntaje" stroke="#3b82f6" fill="#3b82f6" fillOpacity={0.4} />
+                <Tooltip formatter={(value: number | string) => [`${value}%`, 'Puntaje']} />
               </RadarChart>
             </ResponsiveContainer>
           </div>
@@ -690,16 +663,13 @@ function ViewResultados({ resultados }: ViewResultadosProps) {
         {/* Temas débiles / fuertes */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
           {perfil.temas_debiles.length > 0 && (
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-5">
+              <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
                 Temas a reforzar
               </p>
               <div className="flex flex-wrap gap-2">
                 {perfil.temas_debiles.map((tema) => (
-                  <span
-                    key={tema}
-                    className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700 border border-red-200"
-                  >
+                  <span key={tema} className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700 border border-red-200">
                     {tema}
                   </span>
                 ))}
@@ -707,16 +677,13 @@ function ViewResultados({ resultados }: ViewResultadosProps) {
             </div>
           )}
           {perfil.temas_fuertes.length > 0 && (
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-5">
+              <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
                 Puntos fuertes
               </p>
               <div className="flex flex-wrap gap-2">
                 {perfil.temas_fuertes.map((tema) => (
-                  <span
-                    key={tema}
-                    className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 border border-green-200"
-                  >
+                  <span key={tema} className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 border border-green-200">
                     {tema}
                   </span>
                 ))}
@@ -727,11 +694,11 @@ function ViewResultados({ resultados }: ViewResultadosProps) {
 
         {/* IA Analysis */}
         {perfil.analisis && (
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-8">
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 mb-8">
+            <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
               Analisis de la IA
             </p>
-            <blockquote className="border-l-4 border-primary-300 pl-4 text-sm text-gray-700 leading-relaxed italic">
+            <blockquote className="border-l-4 border-primary-300 dark:border-primary-700 pl-4 text-sm text-gray-700 dark:text-gray-300 leading-relaxed italic">
               {perfil.analisis}
             </blockquote>
           </div>
@@ -747,7 +714,7 @@ function ViewResultados({ resultados }: ViewResultadosProps) {
           </button>
           <button
             onClick={() => navigate('/perfil')}
-            className="flex-1 py-3 px-4 bg-white hover:bg-gray-50 text-gray-700 text-sm font-semibold rounded-xl border border-gray-300 transition focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+            className="flex-1 py-3 px-4 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-200 text-sm font-semibold rounded-xl border border-gray-300 dark:border-gray-700 transition focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
           >
             Ver mi perfil
           </button>

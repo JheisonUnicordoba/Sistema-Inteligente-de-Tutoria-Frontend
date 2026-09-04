@@ -207,12 +207,12 @@ export default function TutoriaPage() {
   // ─── View: Cargando ──────────────────────────────────────────────────────
   if (view === 'cargando') {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center">
         <div className="text-center">
           <div className="flex justify-center mb-4">
             <Spinner size={12} />
           </div>
-          <p className="text-sm text-gray-500">Iniciando sesión de tutoría...</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Iniciando sesión de tutoría...</p>
         </div>
       </div>
     )
@@ -221,23 +221,22 @@ export default function TutoriaPage() {
   // ─── View: Sin diagnóstico ───────────────────────────────────────────────
   if (view === 'sin_diagnostico') {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
         <PageHeader />
         <main className="flex-1 flex items-center justify-center px-4">
-          <div className="w-full max-w-sm bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center">
-            <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <div className="w-full max-w-sm bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-8 text-center">
+            <div className="w-14 h-14 bg-amber-50 dark:bg-amber-900/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl">!</span>
             </div>
-            <h2 className="text-xl font-bold text-gray-900 mb-2">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
               Diagnóstico requerido
             </h2>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">
-              Debes completar tu diagnóstico inicial primero para iniciar una sesión de tutoría
-              personalizada.
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
+              Debes completar tu diagnóstico inicial primero para iniciar una sesión de tutoría personalizada.
             </p>
             {error && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl">
-                <p className="text-xs text-red-700">{error}</p>
+              <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
+                <p className="text-xs text-red-700 dark:text-red-400">{error}</p>
               </div>
             )}
             <button
@@ -270,16 +269,16 @@ export default function TutoriaPage() {
   // ─── View: Feedback incorrecto ───────────────────────────────────────────
   if (view === 'feedback_incorrecto' && pregunta) {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
         <PageHeader nivelActual={nivelActual} />
 
         <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
           {/* Question recap with colored options */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-5">
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 mb-5">
+            <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
               Pregunta — {pregunta.tema}
             </p>
-            <p className="text-base font-medium text-gray-900 leading-relaxed mb-5">
+            <p className="text-base font-medium text-gray-900 dark:text-gray-100 leading-relaxed mb-5">
               {pregunta.enunciado}
             </p>
             <div className="space-y-2.5">
@@ -332,39 +331,39 @@ export default function TutoriaPage() {
 
           {/* AI Feedback card */}
           {retroalimentacion && (
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-5 space-y-4">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 mb-5 space-y-4">
+              <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                 Retroalimentación de la IA
               </p>
 
               {/* Error explanation */}
               <div className="border-l-4 border-red-400 pl-4">
-                <p className="text-xs font-semibold text-red-700 mb-1">Tu error</p>
-                <p className="text-sm text-gray-700 leading-relaxed">
+                <p className="text-xs font-semibold text-red-700 dark:text-red-400 mb-1">Tu error</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                   {retroalimentacion.explicacion_error}
                 </p>
               </div>
 
               {/* Key concept */}
               <div className="border-l-4 border-amber-400 pl-4">
-                <p className="text-xs font-semibold text-amber-700 mb-1">Concepto clave</p>
-                <p className="text-sm text-gray-700 leading-relaxed">
+                <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-1">Concepto clave</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                   {retroalimentacion.concepto_clave}
                 </p>
               </div>
 
               {/* Solved example */}
               <div className="border-l-4 border-blue-400 pl-4">
-                <p className="text-xs font-semibold text-blue-700 mb-1">Ejemplo resuelto</p>
-                <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+                <p className="text-xs font-semibold text-blue-700 dark:text-blue-400 mb-1">Ejemplo resuelto</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
                   {retroalimentacion.ejemplo_resuelto}
                 </p>
               </div>
 
               {/* Saber Pro tip */}
               <div className="border-l-4 border-purple-400 pl-4">
-                <p className="text-xs font-semibold text-purple-700 mb-1">Tip para Saber Pro</p>
-                <p className="text-sm text-gray-700 leading-relaxed">
+                <p className="text-xs font-semibold text-purple-700 dark:text-purple-400 mb-1">Tip para Saber Pro</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                   {retroalimentacion.tip_saber_pro}
                 </p>
               </div>
@@ -372,8 +371,8 @@ export default function TutoriaPage() {
           )}
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl">
-              <p className="text-xs text-red-700">{error}</p>
+            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
+              <p className="text-xs text-red-700 dark:text-red-400">{error}</p>
             </div>
           )}
 
@@ -391,9 +390,9 @@ export default function TutoriaPage() {
   // ─── View: Pregunta ──────────────────────────────────────────────────────
   if (view === 'pregunta' && pregunta) {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
         {/* Sticky header */}
-        <header className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-10">
+        <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm sticky top-0 z-10">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -402,7 +401,7 @@ export default function TutoriaPage() {
                     <span className="text-white font-bold text-sm">T</span>
                   </div>
                 </Link>
-                <span className="text-sm font-semibold text-gray-700">Sesión de Tutoría</span>
+                <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Sesión de Tutoría</span>
               </div>
               <div className="flex items-center gap-2">
                 {nivelActual && (
@@ -412,7 +411,7 @@ export default function TutoriaPage() {
                     {nivelActual}
                   </span>
                 )}
-                <span className="text-xs text-gray-400 font-medium">
+                <span className="text-xs text-gray-400 dark:text-gray-500 font-medium">
                   #{pregunta.numero_sesion}
                 </span>
               </div>
@@ -422,22 +421,22 @@ export default function TutoriaPage() {
 
         {/* Level change toast */}
         {mensajeNivel && (
-          <div className="bg-primary-50 border-b border-primary-200 px-4 py-2 text-center">
-            <p className="text-xs font-semibold text-primary-700">{mensajeNivel}</p>
+          <div className="bg-primary-50 dark:bg-primary-900/20 border-b border-primary-200 dark:border-primary-800 px-4 py-2 text-center">
+            <p className="text-xs font-semibold text-primary-700 dark:text-primary-300">{mensajeNivel}</p>
           </div>
         )}
 
         <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
           {/* Topic badge */}
           <div className="mb-4">
-            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">
+            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700">
               {pregunta.tema}
             </span>
           </div>
 
           {/* Question card */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-5">
-            <p className="text-base font-medium text-gray-900 leading-relaxed">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 mb-5">
+            <p className="text-base font-medium text-gray-900 dark:text-gray-100 leading-relaxed">
               {pregunta.enunciado}
             </p>
           </div>
@@ -451,22 +450,22 @@ export default function TutoriaPage() {
                   key={letra}
                   onClick={() => setRespuestaSeleccionada(letra)}
                   disabled={enviando}
-                  className={`w-full flex items-start gap-3 px-4 py-4 rounded-xl border-2 text-left transition focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 ${
+                  className={`w-full flex items-start gap-3 px-4 py-4 rounded-xl border-2 text-left transition focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 dark:focus:ring-offset-gray-950 ${
                     seleccionada
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 bg-gray-100 hover:border-gray-300 hover:bg-gray-50'
+                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 dark:border-blue-600'
+                      : 'border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
                   } disabled:cursor-not-allowed disabled:opacity-70`}
                 >
                   <span
                     className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition ${
-                      seleccionada ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-600'
+                      seleccionada ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
                     }`}
                   >
                     {letra}
                   </span>
                   <span
                     className={`text-sm leading-relaxed pt-0.5 ${
-                      seleccionada ? 'text-blue-900 font-medium' : 'text-gray-700'
+                      seleccionada ? 'text-blue-900 dark:text-blue-200 font-medium' : 'text-gray-700 dark:text-gray-300'
                     }`}
                   >
                     {pregunta.opciones[letra]}
@@ -477,8 +476,8 @@ export default function TutoriaPage() {
           </div>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl">
-              <p className="text-xs text-red-700">{error}</p>
+            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
+              <p className="text-xs text-red-700 dark:text-red-400">{error}</p>
             </div>
           )}
 
@@ -501,7 +500,7 @@ export default function TutoriaPage() {
             <button
               onClick={() => void handleFinalizar()}
               disabled={enviando}
-              className="sm:w-auto py-3 px-5 bg-white hover:bg-gray-50 text-gray-700 text-sm font-semibold rounded-xl border border-gray-300 transition focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="sm:w-auto py-3 px-5 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm font-semibold rounded-xl border border-gray-300 dark:border-gray-600 transition focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Terminar sesión
             </button>
@@ -520,27 +519,27 @@ export default function TutoriaPage() {
     else if (resumen.nivel_final === 'Basico') comparativaClass = 'bg-rose-50 border-rose-200 text-rose-800'
 
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
         <PageHeader />
 
         <main className="flex-1 max-w-2xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-gray-900 mb-6">Resumen de Sesión</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">Resumen de Sesión</h1>
 
             {/* Score circle */}
-            <div className="inline-flex items-center justify-center w-32 h-32 rounded-full bg-primary-50 border-4 border-primary-200 mb-4">
-              <span className="text-4xl font-extrabold text-primary-700">{puntajePct}%</span>
+            <div className="inline-flex items-center justify-center w-32 h-32 rounded-full bg-primary-50 dark:bg-primary-900/30 border-4 border-primary-200 dark:border-primary-800 mb-4">
+              <span className="text-4xl font-extrabold text-primary-700 dark:text-primary-400">{puntajePct}%</span>
             </div>
 
-            <p className="text-base font-semibold text-gray-700 mb-1">
+            <p className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-1">
               {resumen.correctas}/{resumen.total} correctas
             </p>
-            <p className="text-sm text-gray-500">{resumen.duracion_min} min de sesión</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">{resumen.duracion_min} min de sesión</p>
           </div>
 
           {/* Level progression */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-5">
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 mb-5">
+            <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">
               Progresión de nivel
             </p>
             <div className="flex items-center justify-center gap-4">
@@ -549,7 +548,7 @@ export default function TutoriaPage() {
               >
                 {resumen.nivel_inicial}
               </span>
-              <span className="text-gray-400 font-bold text-lg">→</span>
+              <span className="text-gray-400 dark:text-gray-500 font-bold text-lg">→</span>
               <span
                 className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-bold ${nivelBadgeSolid(resumen.nivel_final)}`}
               >
@@ -578,7 +577,7 @@ export default function TutoriaPage() {
             </button>
             <button
               onClick={() => navigate('/progreso')}
-              className="flex-1 py-3 px-4 bg-white hover:bg-gray-50 text-gray-700 text-sm font-semibold rounded-xl border border-gray-300 transition focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+              className="flex-1 py-3 px-4 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm font-semibold rounded-xl border border-gray-300 dark:border-gray-600 transition focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
             >
               Ver mi progreso
             </button>
@@ -595,13 +594,13 @@ export default function TutoriaPage() {
 
 function PageHeader({ nivelActual }: { nivelActual?: string }) {
   return (
-    <header className="bg-white border-b border-gray-200 shadow-sm">
+    <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <Link to="/dashboard" className="flex items-center gap-3 group">
           <div className="w-9 h-9 bg-primary-600 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-base">T</span>
           </div>
-          <span className="text-lg font-semibold text-gray-900 group-hover:text-primary-700 transition">
+          <span className="text-lg font-semibold text-gray-900 dark:text-gray-100 group-hover:text-primary-700 dark:group-hover:text-primary-400 transition">
             TutorIA Saber Pro
           </span>
         </Link>

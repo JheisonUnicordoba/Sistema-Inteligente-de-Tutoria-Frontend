@@ -119,17 +119,17 @@ export default function ProgresoPage() {
     : []
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200 shadow-sm">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 bg-primary-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-base">T</span>
             </div>
-            <span className="text-lg font-semibold text-gray-900">TutorIA Saber Pro</span>
+            <span className="text-lg font-semibold text-gray-900 dark:text-gray-100">TutorIA Saber Pro</span>
           </div>
           <div className="flex items-center gap-3">
-            <Link to="/dashboard" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition">
+            <Link to="/dashboard" className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition">
               Dashboard
             </Link>
             {user?.rol === 'admin' && (
@@ -139,7 +139,7 @@ export default function ProgresoPage() {
             )}
             <button
               onClick={handleLogout}
-              className="text-sm font-medium text-gray-600 hover:text-red-600 border border-gray-300 hover:border-red-300 rounded-lg px-4 py-1.5 transition focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
+              className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 border border-gray-300 dark:border-gray-600 hover:border-red-300 dark:hover:border-red-700 rounded-lg px-4 py-1.5 transition focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
             >
               Cerrar Sesión
             </button>
@@ -149,8 +149,8 @@ export default function ProgresoPage() {
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Mi Progreso</h2>
-          <p className="mt-1 text-gray-500 text-sm">Visualiza tu avance en el Saber Pro.</p>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Mi Progreso</h2>
+          <p className="mt-1 text-gray-500 dark:text-gray-400 text-sm">Visualiza tu avance en el Saber Pro.</p>
         </div>
 
         {estado === 'cargando' && (
@@ -160,9 +160,9 @@ export default function ProgresoPage() {
         )}
 
         {estado === 'error' && (
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center">
-            <p className="text-gray-700 font-medium mb-2">Error al cargar el progreso</p>
-            <p className="text-sm text-gray-500 mb-5">Verifica tu conexión e intenta nuevamente.</p>
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-8 text-center">
+            <p className="text-gray-700 dark:text-gray-300 font-medium mb-2">Error al cargar el progreso</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">Verifica tu conexión e intenta nuevamente.</p>
             <button
               onClick={() => void fetchProgreso()}
               className="bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold rounded-xl px-4 py-2.5"
@@ -173,12 +173,12 @@ export default function ProgresoPage() {
         )}
 
         {estado === 'sin_sesiones' && (
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-10 text-center">
-            <div className="w-16 h-16 bg-primary-50 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-10 text-center">
+            <div className="w-16 h-16 bg-primary-50 dark:bg-primary-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-3xl">G</span>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Aún no tienes sesiones</h3>
-            <p className="text-sm text-gray-500 mb-6 max-w-sm mx-auto">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Aún no tienes sesiones</h3>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 max-w-sm mx-auto">
               Comienza una sesión de tutoría para ver tu progreso aquí.
             </p>
             <Link
@@ -194,15 +194,15 @@ export default function ProgresoPage() {
           <div className="space-y-6">
             {/* Stats row */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex flex-col items-center gap-2">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Nivel Actual</p>
+              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 flex flex-col items-center gap-2">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Nivel Actual</p>
                 <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${nivelDisplay.badgeClass}`}>
                   {nivelDisplay.label}
                 </span>
               </div>
 
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex flex-col items-center gap-2">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Puntaje Promedio</p>
+              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 flex flex-col items-center gap-2">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Puntaje Promedio</p>
                 <div className="relative w-20 h-20">
                   <svg className="w-20 h-20 -rotate-90" viewBox="0 0 80 80">
                     <circle cx="40" cy="40" r="32" fill="none" stroke="#e5e7eb" strokeWidth="8" />
@@ -218,22 +218,22 @@ export default function ProgresoPage() {
                       strokeLinecap="round"
                     />
                   </svg>
-                  <span className="absolute inset-0 flex items-center justify-center text-lg font-extrabold text-gray-900">
+                  <span className="absolute inset-0 flex items-center justify-center text-lg font-extrabold text-gray-900 dark:text-gray-100">
                     {datos.puntaje_promedio !== null ? Math.round(datos.puntaje_promedio) : '—'}
                   </span>
                 </div>
               </div>
 
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 flex flex-col items-center gap-2">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Sesiones Completadas</p>
-                <p className="text-4xl font-extrabold text-gray-900">{datos.sesiones_completadas}</p>
+              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 flex flex-col items-center gap-2">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Sesiones Completadas</p>
+                <p className="text-4xl font-extrabold text-gray-900 dark:text-gray-100">{datos.sesiones_completadas}</p>
               </div>
             </div>
 
             {/* Line chart */}
             {lineData.length > 0 && (
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">Evolución del Puntaje</p>
+              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Evolución del Puntaje</p>
                 <ResponsiveContainer width="100%" height={220}>
                   <LineChart data={lineData}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -254,8 +254,8 @@ export default function ProgresoPage() {
 
             {/* Bar chart */}
             {barData.length > 0 && (
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">Puntaje por Tema</p>
+              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Puntaje por Tema</p>
                 <ResponsiveContainer width="100%" height={220}>
                   <BarChart data={barData}>
                     <CartesianGrid strokeDasharray="3 3" />
@@ -271,8 +271,8 @@ export default function ProgresoPage() {
             {/* Temas */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {datos.temas_debiles.length > 0 && (
-                <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">Temas a Mejorar</p>
+                <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                  <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Temas a Mejorar</p>
                   <div className="flex flex-wrap gap-2">
                     {datos.temas_debiles.map((t) => (
                       <span key={t} className="px-2.5 py-1 bg-rose-100 text-rose-800 text-xs font-semibold rounded-full">
@@ -283,8 +283,8 @@ export default function ProgresoPage() {
                 </div>
               )}
               {datos.temas_fuertes.length > 0 && (
-                <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">Temas Fuertes</p>
+                <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                  <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Temas Fuertes</p>
                   <div className="flex flex-wrap gap-2">
                     {datos.temas_fuertes.map((t) => (
                       <span key={t} className="px-2.5 py-1 bg-emerald-100 text-emerald-800 text-xs font-semibold rounded-full">
@@ -300,7 +300,7 @@ export default function ProgresoPage() {
             <div className="flex justify-end">
               <Link
                 to="/reporte"
-                className="bg-white border border-gray-300 text-gray-700 text-sm font-semibold rounded-xl px-4 py-2.5 hover:bg-gray-50 transition"
+                className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 text-sm font-semibold rounded-xl px-4 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
               >
                 Ver reporte completo
               </Link>

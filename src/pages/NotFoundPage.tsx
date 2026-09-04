@@ -4,11 +4,11 @@ export default function NotFoundPage() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center px-4">
       <div className="text-center">
         <p className="text-8xl font-extrabold text-primary-600 leading-none">404</p>
-        <h1 className="mt-4 text-2xl font-bold text-gray-900">Página no encontrada</h1>
-        <p className="mt-2 text-sm text-gray-500">
+        <h1 className="mt-4 text-2xl font-bold text-gray-900 dark:text-gray-100">Página no encontrada</h1>
+        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
           La ruta que buscas no existe o fue movida.
         </p>
         <button

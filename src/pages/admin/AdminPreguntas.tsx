@@ -110,17 +110,17 @@ function Modal({ isOpen, onClose, title, children }: ModalProps) {
   if (!isOpen) return null
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 py-6"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/70 px-4 py-6"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose()
       }}
     >
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 sticky top-0 bg-white z-10">
-          <h3 className="text-base font-semibold text-gray-900">{title}</h3>
+      <div className="bg-white dark:bg-gray-900 border border-transparent dark:border-gray-700 rounded-2xl shadow-xl dark:shadow-gray-950/50 w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-900 z-10">
+          <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition text-xl leading-none"
+            className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition text-xl leading-none"
             aria-label="Cerrar"
           >
             ×
@@ -263,8 +263,8 @@ export default function AdminPreguntas() {
         {/* Toolbar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
           <div>
-            <h2 className="text-xl font-bold text-gray-900">Preguntas</h2>
-            <p className="text-sm text-gray-500 mt-0.5">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Preguntas</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
               {total} pregunta{total !== 1 ? 's' : ''} en total
             </p>
           </div>
@@ -275,7 +275,7 @@ export default function AdminPreguntas() {
                 setFilterTema(e.target.value)
                 setPage(1)
               }}
-              className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
+              className="rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
             >
               {TEMAS.map((t) => (
                 <option key={t.value} value={t.value}>
@@ -290,7 +290,7 @@ export default function AdminPreguntas() {
                 setFilterNivel(e.target.value)
                 setPage(1)
               }}
-              className="rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
+              className="rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
             >
               {NIVELES.map((n) => (
                 <option key={n.value} value={n.value}>
@@ -309,80 +309,59 @@ export default function AdminPreguntas() {
         </div>
 
         {tableError && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg">
+          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm rounded-lg">
             {tableError}
           </div>
         )}
 
         {/* Table */}
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-100 bg-gray-50">
-                  <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs uppercase tracking-wide">
-                    ID
-                  </th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs uppercase tracking-wide">
-                    Enunciado
-                  </th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs uppercase tracking-wide">
-                    Tema
-                  </th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs uppercase tracking-wide">
-                    Nivel
-                  </th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs uppercase tracking-wide">
-                    Estado
-                  </th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs uppercase tracking-wide">
-                    Acciones
-                  </th>
+                <tr className="border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+                  <th className="text-left px-4 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">ID</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">Enunciado</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">Tema</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">Nivel</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">Estado</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">Acciones</th>
                 </tr>
               </thead>
               <tbody>
                 {loading ? (
                   Array.from({ length: 5 }).map((_, i) => (
-                    <tr key={i} className="border-b border-gray-50">
+                    <tr key={i} className="border-b border-gray-50 dark:border-gray-800">
                       {Array.from({ length: 6 }).map((__, j) => (
                         <td key={j} className="px-4 py-3">
-                          <div className="h-4 bg-gray-200 rounded animate-pulse" />
+                          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
                         </td>
                       ))}
                     </tr>
                   ))
                 ) : preguntas.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-4 py-10 text-center text-sm text-gray-400">
+                    <td colSpan={6} className="px-4 py-10 text-center text-sm text-gray-400 dark:text-gray-500">
                       No se encontraron preguntas
                     </td>
                   </tr>
                 ) : (
                   preguntas.map((p) => (
-                    <tr
-                      key={p.id}
-                      className="border-b border-gray-50 hover:bg-gray-50 transition"
-                    >
-                      <td className="px-4 py-3 text-gray-400 font-mono text-xs">{p.id}</td>
-                      <td className="px-4 py-3 text-gray-700 max-w-xs">
+                    <tr key={p.id} className="border-b border-gray-50 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                      <td className="px-4 py-3 text-gray-400 dark:text-gray-500 font-mono text-xs">{p.id}</td>
+                      <td className="px-4 py-3 text-gray-700 dark:text-gray-300 max-w-xs">
                         <span title={p.enunciado}>
-                          {p.enunciado.length > 80
-                            ? p.enunciado.slice(0, 80) + '…'
-                            : p.enunciado}
+                          {p.enunciado.length > 80 ? p.enunciado.slice(0, 80) + '…' : p.enunciado}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-gray-600">{p.tema}</td>
+                      <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{p.tema}</td>
+                      <td className="px-4 py-3"><NivelBadge nivel={p.nivel} /></td>
                       <td className="px-4 py-3">
-                        <NivelBadge nivel={p.nivel} />
-                      </td>
-                      <td className="px-4 py-3">
-                        <span
-                          className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${
-                            p.activa
-                              ? 'bg-green-100 text-green-700 border border-green-200'
-                              : 'bg-gray-100 text-gray-500 border border-gray-200'
-                          }`}
-                        >
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${
+                          p.activa
+                            ? 'bg-green-100 text-green-700 border border-green-200'
+                            : 'bg-gray-100 text-gray-500 border border-gray-200'
+                        }`}>
                           {p.activa ? 'Activa' : 'Inactiva'}
                         </span>
                       </td>
@@ -390,7 +369,7 @@ export default function AdminPreguntas() {
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => openEditModal(p)}
-                            className="text-xs font-medium text-primary-600 hover:text-primary-700 transition"
+                            className="text-xs font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition"
                           >
                             Editar
                           </button>
@@ -411,22 +390,22 @@ export default function AdminPreguntas() {
 
           {/* Pagination */}
           {pages > 1 && (
-            <div className="flex items-center justify-between px-4 py-3 border-t border-gray-100">
-              <p className="text-xs text-gray-500">
+            <div className="flex items-center justify-between px-4 py-3 border-t border-gray-100 dark:border-gray-700">
+              <p className="text-xs text-gray-500 dark:text-gray-400">
                 Página {page} de {pages}
               </p>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page === 1}
-                  className="text-xs font-medium text-gray-600 hover:text-gray-900 disabled:opacity-40 disabled:cursor-not-allowed px-3 py-1.5 border border-gray-200 rounded-lg transition"
+                  className="text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 disabled:opacity-40 disabled:cursor-not-allowed px-3 py-1.5 border border-gray-200 dark:border-gray-700 rounded-lg transition"
                 >
                   Anterior
                 </button>
                 <button
                   onClick={() => setPage((p) => Math.min(pages, p + 1))}
                   disabled={page === pages}
-                  className="text-xs font-medium text-gray-600 hover:text-gray-900 disabled:opacity-40 disabled:cursor-not-allowed px-3 py-1.5 border border-gray-200 rounded-lg transition"
+                  className="text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 disabled:opacity-40 disabled:cursor-not-allowed px-3 py-1.5 border border-gray-200 dark:border-gray-700 rounded-lg transition"
                 >
                   Siguiente
                 </button>
@@ -443,33 +422,33 @@ export default function AdminPreguntas() {
         title={editingPregunta ? 'Editar Pregunta' : 'Nueva Pregunta'}
       >
         {formError && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg">
+          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm rounded-lg">
             {formError}
           </div>
         )}
         <form onSubmit={(e) => void handleFormSubmit(e)} className="space-y-4">
           {/* Enunciado */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Enunciado</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Enunciado</label>
             <textarea
               required
               rows={3}
               value={formData.enunciado}
               onChange={(e) => setField('enunciado', e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm resize-none focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
+              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 resize-none focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
               placeholder="Escribe el enunciado de la pregunta..."
             />
           </div>
 
           {/* Opciones */}
           <div>
-            <p className="text-sm font-medium text-gray-700 mb-2">Opciones de respuesta</p>
+            <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Opciones de respuesta</p>
             <div className="space-y-2">
               {(['A', 'B', 'C', 'D'] as const).map((letra) => {
                 const fieldKey = `opcion${letra}` as keyof PreguntaFormData
                 return (
                   <div key={letra} className="flex items-center gap-2">
-                    <span className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-100 text-xs font-bold text-gray-600 shrink-0">
+                    <span className="w-6 h-6 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700 text-xs font-bold text-gray-600 dark:text-gray-300 shrink-0">
                       {letra}
                     </span>
                     <input
@@ -478,7 +457,7 @@ export default function AdminPreguntas() {
                       value={formData[fieldKey] as string}
                       onChange={(e) => setField(fieldKey, e.target.value)}
                       placeholder={`Opción ${letra}`}
-                      className="flex-1 rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
+                      className="flex-1 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
                     />
                   </div>
                 )
@@ -488,7 +467,7 @@ export default function AdminPreguntas() {
 
           {/* Respuesta correcta */}
           <div>
-            <p className="text-sm font-medium text-gray-700 mb-2">Respuesta correcta</p>
+            <p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Respuesta correcta</p>
             <div className="flex gap-4">
               {(['A', 'B', 'C', 'D'] as const).map((letra) => (
                 <label key={letra} className="flex items-center gap-1.5 cursor-pointer">
@@ -500,7 +479,7 @@ export default function AdminPreguntas() {
                     onChange={() => setField('respuesta_correcta', letra)}
                     className="accent-primary-600"
                   />
-                  <span className="text-sm font-medium text-gray-700">{letra}</span>
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{letra}</span>
                 </label>
               ))}
             </div>
@@ -508,47 +487,43 @@ export default function AdminPreguntas() {
 
           {/* Tema */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Tema</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tema</label>
             <select
               value={formData.tema}
               onChange={(e) => setField('tema', e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
+              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
             >
               {TEMAS.slice(1).map((t) => (
-                <option key={t.value} value={t.value}>
-                  {t.label}
-                </option>
+                <option key={t.value} value={t.value}>{t.label}</option>
               ))}
             </select>
           </div>
 
           {/* Nivel */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Nivel</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nivel</label>
             <select
               value={formData.nivel}
               onChange={(e) => setField('nivel', e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
+              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
             >
               {NIVELES.slice(1).map((n) => (
-                <option key={n.value} value={n.value}>
-                  {n.label}
-                </option>
+                <option key={n.value} value={n.value}>{n.label}</option>
               ))}
             </select>
           </div>
 
           {/* Explicación */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Explicación{' '}
-              <span className="text-gray-400 font-normal text-xs">(opcional)</span>
+              <span className="text-gray-400 dark:text-gray-500 font-normal text-xs">(opcional)</span>
             </label>
             <textarea
               rows={2}
               value={formData.explicacion}
               onChange={(e) => setField('explicacion', e.target.value)}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm resize-none focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
+              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 resize-none focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
               placeholder="Explica por qué esa es la respuesta correcta..."
             />
           </div>
@@ -559,16 +534,12 @@ export default function AdminPreguntas() {
               disabled={formSaving}
               className="flex-1 bg-primary-600 hover:bg-primary-700 disabled:opacity-60 text-white text-sm font-semibold py-2 rounded-lg transition"
             >
-              {formSaving
-                ? 'Guardando...'
-                : editingPregunta
-                  ? 'Guardar Cambios'
-                  : 'Crear Pregunta'}
+              {formSaving ? 'Guardando...' : editingPregunta ? 'Guardar Cambios' : 'Crear Pregunta'}
             </button>
             <button
               type="button"
               onClick={closeModal}
-              className="flex-1 border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-medium py-2 rounded-lg transition"
+              className="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 text-sm font-medium py-2 rounded-lg transition"
             >
               Cancelar
             </button>
@@ -582,11 +553,11 @@ export default function AdminPreguntas() {
         onClose={() => setDeleteModal({ open: false, pregunta: null })}
         title="Eliminar Pregunta"
       >
-        <p className="text-sm text-gray-700 mb-2">
+        <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
           ¿Estás seguro de que deseas eliminar esta pregunta? Esta acción no se puede deshacer.
         </p>
         {deleteModal.pregunta && (
-          <p className="text-xs text-gray-500 mb-5 italic">
+          <p className="text-xs text-gray-500 dark:text-gray-400 mb-5 italic">
             "{deleteModal.pregunta.enunciado.slice(0, 100)}
             {deleteModal.pregunta.enunciado.length > 100 ? '…' : ''}"
           </p>
@@ -601,7 +572,7 @@ export default function AdminPreguntas() {
           </button>
           <button
             onClick={() => setDeleteModal({ open: false, pregunta: null })}
-            className="flex-1 border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-medium py-2 rounded-lg transition"
+            className="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 text-sm font-medium py-2 rounded-lg transition"
           >
             Cancelar
           </button>

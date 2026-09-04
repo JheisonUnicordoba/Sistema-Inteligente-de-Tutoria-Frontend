@@ -48,15 +48,15 @@ function Modal({ isOpen, onClose, title, children }: ModalProps) {
   if (!isOpen) return null
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 py-6"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/70 px-4 py-6"
       onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
     >
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 sticky top-0 bg-white z-10">
-          <h3 className="text-base font-semibold text-gray-900">{title}</h3>
+      <div className="bg-white dark:bg-gray-900 border dark:border-gray-700 rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-700 sticky top-0 bg-white dark:bg-gray-900 z-10">
+          <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition text-xl leading-none"
+            className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition text-xl leading-none"
             aria-label="Cerrar"
           >
             ×
@@ -202,8 +202,8 @@ export default function AdminEvaluaciones() {
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
           <div>
-            <h2 className="text-xl font-bold text-gray-900">Evaluaciones</h2>
-            <p className="text-sm text-gray-500 mt-0.5">{evaluaciones.length} evaluación{evaluaciones.length !== 1 ? 'es' : ''} en total</p>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Evaluaciones</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{evaluaciones.length} evaluación{evaluaciones.length !== 1 ? 'es' : ''} en total</p>
           </div>
           <button
             onClick={openCreateModal}
@@ -214,50 +214,50 @@ export default function AdminEvaluaciones() {
         </div>
 
         {tableError && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg">
+          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm rounded-lg">
             {tableError}
           </div>
         )}
 
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-100 bg-gray-50">
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Nombre</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Tipo</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Preguntas</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Estado</th>
-                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wide">Acciones</th>
+                <tr className="border-b border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800">
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Nombre</th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Tipo</th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Preguntas</th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Estado</th>
+                  <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Acciones</th>
                 </tr>
               </thead>
               <tbody>
                 {loading ? (
                   Array.from({ length: 4 }).map((_, i) => (
-                    <tr key={i} className="border-b border-gray-50">
+                    <tr key={i} className="border-b border-gray-50 dark:border-gray-800">
                       {Array.from({ length: 5 }).map((__, j) => (
                         <td key={j} className="px-4 py-3">
-                          <div className="h-4 bg-gray-200 rounded animate-pulse" />
+                          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
                         </td>
                       ))}
                     </tr>
                   ))
                 ) : evaluaciones.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="px-4 py-10 text-center text-sm text-gray-400">
+                    <td colSpan={5} className="px-4 py-10 text-center text-sm text-gray-400 dark:text-gray-500">
                       No hay evaluaciones registradas
                     </td>
                   </tr>
                 ) : (
                   evaluaciones.map((ev) => (
-                    <tr key={ev.id} className="border-b border-gray-50 hover:bg-gray-50 transition">
-                      <td className="px-4 py-3 text-gray-800 font-medium">{ev.nombre}</td>
+                    <tr key={ev.id} className="border-b border-gray-50 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                      <td className="px-4 py-3 text-gray-800 dark:text-gray-200 font-medium">{ev.nombre}</td>
                       <td className="px-4 py-3">
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${tipoBadge[ev.tipo] ?? 'bg-gray-100 text-gray-600'}`}>
                           {tipoLabel[ev.tipo] ?? ev.tipo}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-gray-600">{ev.total_preguntas}</td>
+                      <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{ev.total_preguntas}</td>
                       <td className="px-4 py-3">
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border ${ev.activa ? 'bg-emerald-100 text-emerald-800 border-emerald-200' : 'bg-gray-100 text-gray-500 border-gray-200'}`}>
                           {ev.activa ? 'Activa' : 'Inactiva'}
@@ -267,13 +267,13 @@ export default function AdminEvaluaciones() {
                         <div className="flex items-center gap-3">
                           <button
                             onClick={() => openEditModal(ev)}
-                            className="text-xs font-medium text-primary-600 hover:text-primary-700 transition"
+                            className="text-xs font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition"
                           >
                             Editar
                           </button>
                           <button
                             onClick={() => void handleToggleActiva(ev)}
-                            className="text-xs font-medium text-gray-500 hover:text-gray-700 transition"
+                            className="text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition"
                           >
                             {ev.activa ? 'Desactivar' : 'Activar'}
                           </button>
@@ -300,29 +300,29 @@ export default function AdminEvaluaciones() {
         title={editingEval ? 'Editar Evaluación' : 'Nueva Evaluación'}
       >
         {formError && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg">
+          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm rounded-lg">
             {formError}
           </div>
         )}
         <form onSubmit={(e) => void handleFormSubmit(e)} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nombre</label>
             <input
               type="text"
               required
               value={formData.nombre}
               onChange={(e) => setField('nombre', e.target.value)}
               placeholder="Ej. Simulacro Saber Pro 2025"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
+              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tipo</label>
             <select
               value={formData.tipo}
               onChange={(e) => setField('tipo', e.target.value as 'diagnostico' | 'simulacro')}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
+              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
             >
               <option value="diagnostico">Diagnóstico</option>
               <option value="simulacro">Simulacro</option>
@@ -330,7 +330,7 @@ export default function AdminEvaluaciones() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Descripción <span className="text-gray-400 font-normal text-xs">(opcional)</span>
             </label>
             <textarea
@@ -343,7 +343,7 @@ export default function AdminEvaluaciones() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               IDs de preguntas{' '}
               {editingEval
                 ? <span className="text-gray-400 font-normal text-xs">(dejar vacío para no cambiar)</span>
@@ -355,9 +355,9 @@ export default function AdminEvaluaciones() {
               value={formData.pregunta_ids_raw}
               onChange={(e) => setField('pregunta_ids_raw', e.target.value)}
               placeholder="Ej: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10"
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
+              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
             />
-            <p className="text-xs text-gray-400 mt-1">IDs separados por coma. Mínimo 10 preguntas.</p>
+            <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">IDs separados por coma. Mínimo 10 preguntas.</p>
           </div>
 
           <div className="flex gap-3 pt-2">
@@ -371,7 +371,7 @@ export default function AdminEvaluaciones() {
             <button
               type="button"
               onClick={closeModal}
-              className="flex-1 border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-medium py-2 rounded-lg transition"
+              className="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 text-sm font-medium py-2 rounded-lg transition"
             >
               Cancelar
             </button>

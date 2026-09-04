@@ -2,6 +2,16 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import api from '../lib/api'
 import axios from 'axios'
+import {
+  Clock,
+  Check,
+  X,
+  AlertTriangle,
+  TrendingUp,
+  TrendingDown,
+  ArrowRight,
+  GraduationCap,
+} from 'lucide-react'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -255,12 +265,12 @@ export default function EvaluacionPage() {
   // ─── View: Cargando ──────────────────────────────────────────────────────
   if (view === 'cargando') {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex items-center justify-center">
         <div className="text-center">
           <div className="flex justify-center mb-4">
             <Spinner size={12} />
           </div>
-          <p className="text-sm text-gray-500">Iniciando evaluación adaptativa...</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Iniciando evaluación adaptativa...</p>
         </div>
       </div>
     )
@@ -269,20 +279,20 @@ export default function EvaluacionPage() {
   // ─── View: Sin diagnóstico ───────────────────────────────────────────────
   if (view === 'sin_diagnostico') {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
         <EvalHeader tiempoRestante={null} timerRojo={false} timerNaranja={false} nivelActual="" cambioNivel={null} showTimer={false} />
         <main className="flex-1 flex items-center justify-center px-4">
-          <div className="w-full max-w-sm bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center">
-            <div className="w-14 h-14 bg-amber-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl">!</span>
+          <div className="w-full max-w-sm bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-8 text-center">
+            <div className="w-14 h-14 bg-amber-50 dark:bg-amber-900/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <AlertTriangle size={28} className="text-amber-500" aria-hidden="true" />
             </div>
-            <h2 className="text-xl font-bold text-gray-900 mb-2">Diagnóstico requerido</h2>
-            <p className="text-sm text-gray-500 mb-6 leading-relaxed">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Diagnóstico requerido</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
               Debes completar tu diagnóstico inicial antes de acceder a la evaluación adaptativa.
             </p>
             {error && (
-              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl">
-                <p className="text-xs text-red-700">{error}</p>
+              <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
+                <p className="text-xs text-red-700 dark:text-red-400">{error}</p>
               </div>
             )}
             <button
@@ -300,7 +310,7 @@ export default function EvaluacionPage() {
   // ─── View: Feedback ──────────────────────────────────────────────────────
   if (view === 'feedback' && pregunta) {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
         <EvalHeader
           tiempoRestante={tiempoRestante}
           timerRojo={timerRojo}
@@ -312,11 +322,11 @@ export default function EvaluacionPage() {
 
         <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
           {/* Question recap */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-5">
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 mb-5">
+            <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">
               Pregunta — {pregunta.tema}
             </p>
-            <p className="text-base font-medium text-gray-900 leading-relaxed mb-5">
+            <p className="text-base font-medium text-gray-900 dark:text-gray-100 leading-relaxed mb-5">
               {pregunta.enunciado}
             </p>
             <div className="space-y-2.5">
@@ -324,9 +334,9 @@ export default function EvaluacionPage() {
                 const isSelected = respuestaSeleccionada === letra
                 const isCorrect = respuestaCorrecta === letra
 
-                let borderClass = 'border-gray-200 bg-gray-50'
-                let badgeClass = 'bg-gray-100 text-gray-600'
-                let textClass = 'text-gray-700'
+                let borderClass = 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800'
+                let badgeClass = 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
+                let textClass = 'text-gray-700 dark:text-gray-300'
 
                 if (isCorrect) {
                   borderClass = 'border-green-500 bg-green-50'
@@ -352,14 +362,10 @@ export default function EvaluacionPage() {
                       {pregunta.opciones[letra]}
                     </span>
                     {isCorrect && (
-                      <span className="ml-auto flex-shrink-0 text-green-600 font-bold text-sm">
-                        ✓
-                      </span>
+                      <Check size={16} className="ml-auto flex-shrink-0 text-green-600" aria-label="Correcta" />
                     )}
                     {isSelected && !isCorrect && (
-                      <span className="ml-auto flex-shrink-0 text-red-600 font-bold text-sm">
-                        ✗
-                      </span>
+                      <X size={16} className="ml-auto flex-shrink-0 text-red-600" aria-label="Incorrecta" />
                     )}
                   </div>
                 )
@@ -369,31 +375,31 @@ export default function EvaluacionPage() {
 
           {/* AI Feedback */}
           {retroalimentacion && (
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-5 space-y-4">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
+            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 mb-5 space-y-4">
+              <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
                 Retroalimentación de la IA
               </p>
               <div className="border-l-4 border-red-400 pl-4">
-                <p className="text-xs font-semibold text-red-700 mb-1">Tu error</p>
-                <p className="text-sm text-gray-700 leading-relaxed">
+                <p className="text-xs font-semibold text-red-700 dark:text-red-400 mb-1">Tu error</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                   {retroalimentacion.explicacion_error}
                 </p>
               </div>
               <div className="border-l-4 border-amber-400 pl-4">
-                <p className="text-xs font-semibold text-amber-700 mb-1">Concepto clave</p>
-                <p className="text-sm text-gray-700 leading-relaxed">
+                <p className="text-xs font-semibold text-amber-700 dark:text-amber-400 mb-1">Concepto clave</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                   {retroalimentacion.concepto_clave}
                 </p>
               </div>
               <div className="border-l-4 border-blue-400 pl-4">
-                <p className="text-xs font-semibold text-blue-700 mb-1">Ejemplo resuelto</p>
-                <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
+                <p className="text-xs font-semibold text-blue-700 dark:text-blue-400 mb-1">Ejemplo resuelto</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
                   {retroalimentacion.ejemplo_resuelto}
                 </p>
               </div>
               <div className="border-l-4 border-purple-400 pl-4">
-                <p className="text-xs font-semibold text-purple-700 mb-1">Tip para Saber Pro</p>
-                <p className="text-sm text-gray-700 leading-relaxed">
+                <p className="text-xs font-semibold text-purple-700 dark:text-purple-400 mb-1">Tip para Saber Pro</p>
+                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                   {retroalimentacion.tip_saber_pro}
                 </p>
               </div>
@@ -401,8 +407,8 @@ export default function EvaluacionPage() {
           )}
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl">
-              <p className="text-xs text-red-700">{error}</p>
+            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
+              <p className="text-xs text-red-700 dark:text-red-400">{error}</p>
             </div>
           )}
 
@@ -420,7 +426,7 @@ export default function EvaluacionPage() {
   // ─── View: Pregunta ──────────────────────────────────────────────────────
   if (view === 'pregunta' && pregunta) {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
         <EvalHeader
           tiempoRestante={tiempoRestante}
           timerRojo={timerRojo}
@@ -433,17 +439,17 @@ export default function EvaluacionPage() {
         <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
           {/* Info bar */}
           <div className="flex items-center justify-between mb-4">
-            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">
+            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700">
               {pregunta.tema}
             </span>
-            <span className="text-xs text-gray-400">
+            <span className="text-xs text-gray-400 dark:text-gray-500">
               Pregunta #{pregunta.numero} · Mín. 10 preguntas
             </span>
           </div>
 
           {/* Question card */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-5">
-            <p className="text-base font-medium text-gray-900 leading-relaxed">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 mb-5">
+            <p className="text-base font-medium text-gray-900 dark:text-gray-100 leading-relaxed">
               {pregunta.enunciado}
             </p>
           </div>
@@ -457,22 +463,22 @@ export default function EvaluacionPage() {
                   key={letra}
                   onClick={() => setRespuestaSeleccionada(letra)}
                   disabled={enviando}
-                  className={`w-full flex items-start gap-3 px-4 py-4 rounded-xl border-2 text-left transition focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 ${
+                  className={`w-full flex items-start gap-3 px-4 py-4 rounded-xl border-2 text-left transition focus:outline-none focus:ring-2 focus:ring-primary-400 focus:ring-offset-2 dark:focus:ring-offset-gray-950 ${
                     seleccionada
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 bg-gray-100 hover:border-gray-300 hover:bg-gray-50'
+                      ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20 dark:border-blue-600'
+                      : 'border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'
                   } disabled:cursor-not-allowed disabled:opacity-70`}
                 >
                   <span
                     className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition ${
-                      seleccionada ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-600'
+                      seleccionada ? 'bg-blue-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
                     }`}
                   >
                     {letra}
                   </span>
                   <span
                     className={`text-sm leading-relaxed pt-0.5 ${
-                      seleccionada ? 'text-blue-900 font-medium' : 'text-gray-700'
+                      seleccionada ? 'text-blue-900 dark:text-blue-200 font-medium' : 'text-gray-700 dark:text-gray-300'
                     }`}
                   >
                     {pregunta.opciones[letra]}
@@ -483,8 +489,8 @@ export default function EvaluacionPage() {
           </div>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl">
-              <p className="text-xs text-red-700">{error}</p>
+            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
+              <p className="text-xs text-red-700 dark:text-red-400">{error}</p>
             </div>
           )}
 
@@ -513,49 +519,49 @@ export default function EvaluacionPage() {
     const temaEntries = Object.entries(resultados.puntaje_por_tema)
 
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950 flex flex-col">
         <EvalHeader tiempoRestante={null} timerRojo={false} timerNaranja={false} nivelActual="" cambioNivel={null} showTimer={false} />
 
         <main className="flex-1 max-w-3xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
               Resultado de Evaluación Adaptativa
             </h1>
 
             {resultados.incompleta && (
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-100 border border-amber-300 text-amber-800 rounded-full text-xs font-semibold mb-4">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-100 dark:bg-amber-900/20 border border-amber-300 dark:border-amber-800 text-amber-800 dark:text-amber-300 rounded-full text-xs font-semibold mb-4">
                 <span>!</span>
                 Evaluación incompleta por tiempo
               </div>
             )}
 
             {/* Score circle */}
-            <div className="inline-flex items-center justify-center w-32 h-32 rounded-full bg-primary-50 border-4 border-primary-200 mb-4">
-              <span className="text-4xl font-extrabold text-primary-700">{puntajePct}%</span>
+            <div className="inline-flex items-center justify-center w-32 h-32 rounded-full bg-primary-50 dark:bg-primary-900/30 border-4 border-primary-200 dark:border-primary-800 mb-4">
+              <span className="text-4xl font-extrabold text-primary-700 dark:text-primary-400">{puntajePct}%</span>
             </div>
 
-            <p className="text-base font-semibold text-gray-700 mb-1">
+            <p className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-1">
               {resultados.correctas}/{resultados.total} correctas
             </p>
           </div>
 
           {/* Level progression */}
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-5">
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 mb-5">
+            <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">
               Progresión de nivel
             </p>
             <div className="flex items-center justify-center gap-4">
               <div className="text-center">
-                <p className="text-xs text-gray-400 mb-1">Inicial</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500 mb-1">Inicial</p>
                 <span
                   className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-bold ${nivelBadgeSolid(resultados.nivel_inicial)}`}
                 >
                   {resultados.nivel_inicial}
                 </span>
               </div>
-              <span className="text-gray-400 font-bold text-xl">→</span>
+              <ArrowRight size={20} className="text-gray-400 dark:text-gray-500" aria-hidden="true" />
               <div className="text-center">
-                <p className="text-xs text-gray-400 mb-1">Final</p>
+                <p className="text-xs text-gray-400 dark:text-gray-500 mb-1">Final</p>
                 <span
                   className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-bold ${nivelBadgeSolid(resultados.nivel_final)}`}
                 >
@@ -567,8 +573,8 @@ export default function EvaluacionPage() {
 
           {/* Score by topic table */}
           {temaEntries.length > 0 && (
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-5">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">
+            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 mb-5">
+              <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">
                 Puntaje por tema
               </p>
               <div className="space-y-4">
@@ -583,10 +589,10 @@ export default function EvaluacionPage() {
                   return (
                     <div key={tema}>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm text-gray-700 font-medium">{tema}</span>
-                        <span className="text-sm font-bold text-gray-900">{pct}%</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300 font-medium">{tema}</span>
+                        <span className="text-sm font-bold text-gray-900 dark:text-gray-100">{pct}%</span>
                       </div>
-                      <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                      <div className="h-2 w-full bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
                         <div
                           className={`h-full rounded-full transition-all duration-700 ${barColor}`}
                           style={{ width: `${pct}%` }}
@@ -600,8 +606,8 @@ export default function EvaluacionPage() {
           )}
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl">
-              <p className="text-xs text-red-700">{error}</p>
+            <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
+              <p className="text-xs text-red-700 dark:text-red-400">{error}</p>
             </div>
           )}
 
@@ -618,7 +624,7 @@ export default function EvaluacionPage() {
                 navigate('/evaluacion')
                 window.location.reload()
               }}
-              className="flex-1 py-3 px-4 bg-white hover:bg-gray-50 text-gray-700 text-sm font-semibold rounded-xl border border-gray-300 transition focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+              className="flex-1 py-3 px-4 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 text-sm font-semibold rounded-xl border border-gray-300 dark:border-gray-600 transition focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
             >
               Nueva evaluación
             </button>
@@ -652,19 +658,19 @@ function EvalHeader({
 }: EvalHeaderProps) {
   const timerClass = timerRojo
     ? timerNaranja
-      ? 'bg-orange-100 text-orange-700 border border-orange-300'
-      : 'bg-red-100 text-red-700 border border-red-300'
-    : 'bg-gray-100 text-gray-700 border border-gray-200'
+      ? 'bg-orange-100 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400 border border-orange-300 dark:border-orange-800'
+      : 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400 border border-red-300 dark:border-red-800'
+    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700'
 
   return (
-    <header className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-10">
+    <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm sticky top-0 z-10">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex items-center justify-between">
           <Link to="/dashboard" className="flex items-center gap-2 group">
             <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">T</span>
+              <GraduationCap size={16} className="text-white" aria-hidden="true" />
             </div>
-            <span className="text-sm font-semibold text-gray-700 group-hover:text-primary-700 transition hidden sm:block">
+            <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 group-hover:text-primary-700 dark:group-hover:text-primary-400 transition hidden sm:block">
               Evaluación Adaptativa
             </span>
           </Link>
@@ -679,7 +685,9 @@ function EvalHeader({
                     : 'bg-rose-100 text-rose-800 border border-rose-300'
                 }`}
               >
-                {cambioNivel === 'subio' ? '↑ Nivel subió' : '↓ Nivel bajó'}
+                {cambioNivel === 'subio'
+                  ? <><TrendingUp size={12} aria-hidden="true" /> Nivel subió</>
+                  : <><TrendingDown size={12} aria-hidden="true" /> Nivel bajó</>}
               </span>
             )}
 
@@ -698,7 +706,7 @@ function EvalHeader({
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-mono font-semibold transition-colors ${timerClass}`}
                 aria-label={`Tiempo restante: ${formatTime(tiempoRestante)}`}
               >
-                <span aria-hidden="true">⏱</span>
+                <Clock size={14} aria-hidden="true" />
                 <span>{formatTime(tiempoRestante)}</span>
               </div>
             )}

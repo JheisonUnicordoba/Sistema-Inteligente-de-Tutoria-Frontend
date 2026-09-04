@@ -124,20 +124,20 @@ export default function AdminReportes() {
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
           <div>
-            <h2 className="text-xl font-bold text-gray-900">Reportes</h2>
-            <p className="text-sm text-gray-500 mt-0.5">Estadísticas globales de la plataforma</p>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Reportes</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Estadísticas globales de la plataforma</p>
           </div>
           <button
             onClick={() => void handleExportCSV()}
             disabled={exporting}
-            className="bg-white border border-gray-300 text-gray-700 text-sm font-semibold rounded-xl px-4 py-2.5 hover:bg-gray-50 transition disabled:opacity-60 whitespace-nowrap"
+            className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 text-sm font-semibold rounded-xl px-4 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-700 transition disabled:opacity-60 whitespace-nowrap"
           >
             {exporting ? 'Exportando...' : 'Exportar CSV'}
           </button>
         </div>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg">
+          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm rounded-lg">
             {error}
           </div>
         )}
@@ -146,32 +146,32 @@ export default function AdminReportes() {
           <div className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                  <div className="h-3 bg-gray-200 rounded animate-pulse w-24 mb-3" />
-                  <div className="h-10 bg-gray-200 rounded animate-pulse w-16" />
+                <div key={i} className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                  <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-24 mb-3" />
+                  <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-16" />
                 </div>
               ))}
             </div>
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-              <div className="h-3 bg-gray-200 rounded animate-pulse w-40 mb-4" />
-              <div className="h-48 bg-gray-100 rounded animate-pulse" />
+            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+              <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-40 mb-4" />
+              <div className="h-48 bg-gray-100 dark:bg-gray-800 rounded animate-pulse" />
             </div>
           </div>
         ) : datos ? (
           <div className="space-y-6">
             {/* Stat cards */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Total Estudiantes</p>
-                <p className="text-4xl font-extrabold text-gray-900">{datos.total_estudiantes}</p>
+              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Total Estudiantes</p>
+                <p className="text-4xl font-extrabold text-gray-900 dark:text-gray-100">{datos.total_estudiantes}</p>
               </div>
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Total Sesiones</p>
-                <p className="text-4xl font-extrabold text-gray-900">{datos.total_sesiones}</p>
+              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Total Sesiones</p>
+                <p className="text-4xl font-extrabold text-gray-900 dark:text-gray-100">{datos.total_sesiones}</p>
               </div>
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Puntaje Promedio Global</p>
-                <p className="text-4xl font-extrabold text-gray-900">
+              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Puntaje Promedio Global</p>
+                <p className="text-4xl font-extrabold text-gray-900 dark:text-gray-100">
                   {datos.puntaje_promedio_global !== null ? `${Math.round(datos.puntaje_promedio_global)}%` : '—'}
                 </p>
               </div>
@@ -179,12 +179,12 @@ export default function AdminReportes() {
 
             {/* Sesiones por tipo */}
             {Object.keys(datos.sesiones_por_tipo).length > 0 && (
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">Sesiones por Tipo</p>
+              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Sesiones por Tipo</p>
                 <div className="flex flex-wrap gap-3">
                   {Object.entries(datos.sesiones_por_tipo).map(([tipo, count]) => (
-                    <div key={tipo} className="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-xl border border-gray-100">
-                      <span className="text-sm font-medium text-gray-700">{tipoLabel[tipo] ?? tipo}</span>
+                    <div key={tipo} className="flex items-center gap-2 px-4 py-2 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700">
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{tipoLabel[tipo] ?? tipo}</span>
                       <span className="text-sm font-bold text-primary-600">{count}</span>
                     </div>
                   ))}
@@ -194,8 +194,8 @@ export default function AdminReportes() {
 
             {/* Distribution pie chart */}
             {pieData.length > 0 && (
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">Distribución por Nivel</p>
+              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Distribución por Nivel</p>
                 <ResponsiveContainer width="100%" height={260}>
                   <PieChart>
                     <Pie
@@ -220,8 +220,8 @@ export default function AdminReportes() {
 
             {/* Bar chart puntaje por tema */}
             {barData.length > 0 && (
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">Puntaje Promedio por Tema</p>
+              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Puntaje Promedio por Tema</p>
                 <ResponsiveContainer width="100%" height={220}>
                   <BarChart data={barData}>
                     <CartesianGrid strokeDasharray="3 3" />

@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef, type ReactNode, type FormEvent } from 'react'
+import { Link } from 'react-router-dom'
 import Layout from '../../components/Layout'
 import api from '../../lib/api'
 import axios from 'axios'
+import { useToast } from '../../contexts/ToastContext'
 
 interface Usuario {
   id: number
@@ -68,17 +70,17 @@ function Modal({ isOpen, onClose, title, children }: ModalProps) {
   if (!isOpen) return null
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/70 px-4"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose()
       }}
     >
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-          <h3 className="text-base font-semibold text-gray-900">{title}</h3>
+      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl dark:shadow-gray-950/50 border border-transparent dark:border-gray-700 w-full max-w-md max-h-[90vh] overflow-y-auto">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-700">
+          <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition text-xl leading-none"
+            className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition text-xl leading-none"
             aria-label="Cerrar"
           >
             ×
@@ -93,6 +95,7 @@ function Modal({ isOpen, onClose, title, children }: ModalProps) {
 const emptyForm: UsuarioFormData = { nombre: '', email: '', rol: 'estudiante', password: '' }
 
 export default function AdminUsuarios() {
+  const { addToast } = useToast()
   const [usuarios, setUsuarios] = useState<Usuario[]>([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
@@ -179,11 +182,13 @@ export default function AdminUsuarios() {
     setFormSaving(true)
     try {
       if (editingUsuario) {
-        const body: { nombre?: string; rol?: string; activo?: boolean } = {
+        const body: { nombre?: string; email?: string; rol?: string; activo?: boolean; password?: string } = {
           nombre: formData.nombre,
+          email: formData.email,
           rol: formData.rol,
           activo: formData.activo,
         }
+        if (formData.password.trim()) body.password = formData.password.trim()
         await api.put(`/admin/usuarios/${editingUsuario.id}`, body)
       } else {
         await api.post('/admin/usuarios', {
@@ -195,13 +200,15 @@ export default function AdminUsuarios() {
       }
       closeModal()
       await fetchUsuarios()
+      addToast(editingUsuario ? 'Usuario actualizado correctamente' : 'Usuario creado correctamente', 'success')
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         const status = err.response?.status
         if (status === 409) {
           setFormError('Este correo ya está registrado')
         } else {
-          setFormError('Error al guardar el usuario')
+          const detail = err.response?.data?.detail as string | undefined
+          setFormError(detail ?? 'Error al guardar el usuario')
         }
       } else {
         setFormError('Error al conectar con el servidor')
@@ -222,10 +229,13 @@ export default function AdminUsuarios() {
       await api.put(`/admin/usuarios/${confirmModal.usuario.id}`, {
         activo: !confirmModal.usuario.activo,
       })
+      const wasActive = confirmModal.usuario?.activo
       setConfirmModal({ open: false, usuario: null })
       await fetchUsuarios()
+      addToast(wasActive ? 'Usuario desactivado' : 'Usuario activado', 'success')
     } catch {
       setConfirmModal({ open: false, usuario: null })
+      addToast('Error al cambiar el estado del usuario', 'error')
     } finally {
       setConfirmLoading(false)
     }
@@ -244,8 +254,8 @@ export default function AdminUsuarios() {
         {/* Toolbar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
           <div>
-            <h2 className="text-xl font-bold text-gray-900">Usuarios</h2>
-            <p className="text-sm text-gray-500 mt-0.5">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Usuarios</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">
               {total} usuario{total !== 1 ? 's' : ''} registrado{total !== 1 ? 's' : ''}
             </p>
           </div>
@@ -255,7 +265,7 @@ export default function AdminUsuarios() {
               placeholder="Buscar por nombre o email..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition w-56"
+              className="rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition w-56"
             />
             <button
               onClick={openCreateModal}
@@ -267,78 +277,63 @@ export default function AdminUsuarios() {
         </div>
 
         {tableError && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg">
+          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm rounded-lg">
             {tableError}
           </div>
         )}
 
         {/* Table */}
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-100 bg-gray-50">
-                  <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs uppercase tracking-wide">
-                    ID
-                  </th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs uppercase tracking-wide">
-                    Nombre
-                  </th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs uppercase tracking-wide">
-                    Email
-                  </th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs uppercase tracking-wide">
-                    Rol
-                  </th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs uppercase tracking-wide">
-                    Registro
-                  </th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs uppercase tracking-wide">
-                    Estado
-                  </th>
-                  <th className="text-left px-4 py-3 font-medium text-gray-500 text-xs uppercase tracking-wide">
-                    Acciones
-                  </th>
+                <tr className="border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+                  <th className="text-left px-4 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">ID</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">Nombre</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">Email</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">Rol</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">Registro</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">Estado</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">Acciones</th>
                 </tr>
               </thead>
               <tbody>
                 {loading ? (
                   Array.from({ length: 5 }).map((_, i) => (
-                    <tr key={i} className="border-b border-gray-50">
+                    <tr key={i} className="border-b border-gray-50 dark:border-gray-800">
                       {Array.from({ length: 7 }).map((__, j) => (
                         <td key={j} className="px-4 py-3">
-                          <div className="h-4 bg-gray-200 rounded animate-pulse" />
+                          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
                         </td>
                       ))}
                     </tr>
                   ))
                 ) : usuarios.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="px-4 py-10 text-center text-sm text-gray-400">
+                    <td colSpan={7} className="px-4 py-10 text-center text-sm text-gray-400 dark:text-gray-500">
                       No se encontraron usuarios
                     </td>
                   </tr>
                 ) : (
                   usuarios.map((u) => (
-                    <tr
-                      key={u.id}
-                      className="border-b border-gray-50 hover:bg-gray-50 transition"
-                    >
-                      <td className="px-4 py-3 text-gray-400 font-mono text-xs">{u.id}</td>
-                      <td className="px-4 py-3 font-medium text-gray-900">{u.nombre}</td>
-                      <td className="px-4 py-3 text-gray-600">{u.email}</td>
-                      <td className="px-4 py-3">
-                        <RolBadge rol={u.rol} />
-                      </td>
-                      <td className="px-4 py-3 text-gray-500">{fechaFormateada(u.created_at)}</td>
-                      <td className="px-4 py-3">
-                        <Badge activo={u.activo} />
-                      </td>
+                    <tr key={u.id} className="border-b border-gray-50 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                      <td className="px-4 py-3 text-gray-400 dark:text-gray-500 font-mono text-xs">{u.id}</td>
+                      <td className="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">{u.nombre}</td>
+                      <td className="px-4 py-3 text-gray-600 dark:text-gray-400">{u.email}</td>
+                      <td className="px-4 py-3"><RolBadge rol={u.rol} /></td>
+                      <td className="px-4 py-3 text-gray-500 dark:text-gray-400">{fechaFormateada(u.created_at)}</td>
+                      <td className="px-4 py-3"><Badge activo={u.activo} /></td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
+                          <Link
+                            to={`/admin/usuarios/${u.id}/perfil`}
+                            className="text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition"
+                          >
+                            Ver Perfil
+                          </Link>
                           <button
                             onClick={() => openEditModal(u)}
-                            className="text-xs font-medium text-primary-600 hover:text-primary-700 transition"
+                            className="text-xs font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition"
                           >
                             Editar
                           </button>
@@ -363,22 +358,22 @@ export default function AdminUsuarios() {
 
           {/* Pagination */}
           {pages > 1 && (
-            <div className="flex items-center justify-between px-4 py-3 border-t border-gray-100">
-              <p className="text-xs text-gray-500">
+            <div className="flex items-center justify-between px-4 py-3 border-t border-gray-100 dark:border-gray-700">
+              <p className="text-xs text-gray-500 dark:text-gray-400">
                 Página {page} de {pages}
               </p>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setPage((p) => Math.max(1, p - 1))}
                   disabled={page === 1}
-                  className="text-xs font-medium text-gray-600 hover:text-gray-900 disabled:opacity-40 disabled:cursor-not-allowed px-3 py-1.5 border border-gray-200 rounded-lg transition"
+                  className="text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 disabled:opacity-40 disabled:cursor-not-allowed px-3 py-1.5 border border-gray-200 dark:border-gray-700 rounded-lg transition"
                 >
                   Anterior
                 </button>
                 <button
                   onClick={() => setPage((p) => Math.min(pages, p + 1))}
                   disabled={page === pages}
-                  className="text-xs font-medium text-gray-600 hover:text-gray-900 disabled:opacity-40 disabled:cursor-not-allowed px-3 py-1.5 border border-gray-200 rounded-lg transition"
+                  className="text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 disabled:opacity-40 disabled:cursor-not-allowed px-3 py-1.5 border border-gray-200 dark:border-gray-700 rounded-lg transition"
                 >
                   Siguiente
                 </button>
@@ -395,13 +390,13 @@ export default function AdminUsuarios() {
         title={editingUsuario ? 'Editar Usuario' : 'Nuevo Usuario'}
       >
         {formError && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg">
+          <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm rounded-lg">
             {formError}
           </div>
         )}
         <form onSubmit={(e) => void handleFormSubmit(e)} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Nombre completo
             </label>
             <input
@@ -409,31 +404,29 @@ export default function AdminUsuarios() {
               required
               value={formData.nombre}
               onChange={(e) => setFormData((f) => ({ ...f, nombre: e.target.value }))}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
+              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
             />
           </div>
 
-          {!editingUsuario && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Correo electrónico
-              </label>
-              <input
-                type="email"
-                required
-                value={formData.email}
-                onChange={(e) => setFormData((f) => ({ ...f, email: e.target.value }))}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
-              />
-            </div>
-          )}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Correo electrónico
+            </label>
+            <input
+              type="email"
+              required
+              value={formData.email}
+              onChange={(e) => setFormData((f) => ({ ...f, email: e.target.value }))}
+              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
+            />
+          </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Rol</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Rol</label>
             <select
               value={formData.rol}
               onChange={(e) => setFormData((f) => ({ ...f, rol: e.target.value }))}
-              className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
+              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
             >
               {ROLES.map((r) => (
                 <option key={r} value={r} className="capitalize">
@@ -445,13 +438,13 @@ export default function AdminUsuarios() {
 
           {editingUsuario && (
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Estado</label>
               <select
                 value={formData.activo ? 'activo' : 'inactivo'}
                 onChange={(e) =>
                   setFormData((f) => ({ ...f, activo: e.target.value === 'activo' }))
                 }
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
+                className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
               >
                 <option value="activo">Activo</option>
                 <option value="inactivo">Inactivo</option>
@@ -459,19 +452,24 @@ export default function AdminUsuarios() {
             </div>
           )}
 
-          {!editingUsuario && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
-              <input
-                type="password"
-                required
-                value={formData.password}
-                onChange={(e) => setFormData((f) => ({ ...f, password: e.target.value }))}
-                placeholder="••••••••"
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
-              />
-            </div>
-          )}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              {editingUsuario ? 'Nueva contraseña' : 'Contraseña'}
+            </label>
+            <input
+              type="password"
+              required={!editingUsuario}
+              value={formData.password}
+              onChange={(e) => setFormData((f) => ({ ...f, password: e.target.value }))}
+              placeholder={editingUsuario ? 'Dejar en blanco para no cambiar' : '••••••••'}
+              className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
+            />
+            {editingUsuario && (
+              <p className="mt-1 text-xs text-gray-400 dark:text-gray-500">
+                Mínimo 6 caracteres. Dejar vacío para conservar la contraseña actual.
+              </p>
+            )}
+          </div>
 
           <div className="flex gap-3 pt-2">
             <button
@@ -484,7 +482,7 @@ export default function AdminUsuarios() {
             <button
               type="button"
               onClick={closeModal}
-              className="flex-1 border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-medium py-2 rounded-lg transition"
+              className="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 text-sm font-medium py-2 rounded-lg transition"
             >
               Cancelar
             </button>
@@ -498,7 +496,7 @@ export default function AdminUsuarios() {
         onClose={() => setConfirmModal({ open: false, usuario: null })}
         title="Confirmar acción"
       >
-        <p className="text-sm text-gray-700 mb-5">
+        <p className="text-sm text-gray-700 dark:text-gray-300 mb-5">
           ¿Estás seguro de que deseas{' '}
           <strong>
             {confirmModal.usuario?.activo ? 'desactivar' : 'activar'} a{' '}
@@ -524,7 +522,7 @@ export default function AdminUsuarios() {
           </button>
           <button
             onClick={() => setConfirmModal({ open: false, usuario: null })}
-            className="flex-1 border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-medium py-2 rounded-lg transition"
+            className="flex-1 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 text-sm font-medium py-2 rounded-lg transition"
           >
             Cancelar
           </button>

@@ -2,6 +2,18 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import api from '../lib/api'
+import {
+  ScanSearch,
+  BrainCircuit,
+  Target,
+  TrendingUp,
+  AlertCircle,
+  GraduationCap,
+  LogOut,
+  Shield,
+  type LucideIcon,
+} from 'lucide-react'
+import ThemeToggle from '../components/ThemeToggle'
 
 interface UserProfile {
   nivel_actual: string
@@ -12,34 +24,34 @@ interface UserProfile {
 interface DashboardCard {
   title: string
   description: string
-  icon: string
+  Icon: LucideIcon
   path: string
 }
 
 const cards: DashboardCard[] = [
   {
-    icon: '?',
+    Icon: ScanSearch,
     title: 'Diagnóstico Inicial',
     description:
       'Evalúa tu nivel actual de razonamiento cuantitativo para personalizar tu plan de estudio.',
     path: '/diagnostico',
   },
   {
-    icon: 'R',
+    Icon: BrainCircuit,
     title: 'Tutoría IA',
     description:
       'Recibe explicaciones adaptadas, ejemplos interactivos y retroalimentación inmediata de la IA.',
     path: '/tutoria',
   },
   {
-    icon: 'E',
+    Icon: Target,
     title: 'Evaluación Adaptativa',
     description:
       'Practica con ejercicios que se ajustan automáticamente a tu nivel de desempeño.',
     path: '/evaluacion',
   },
   {
-    icon: 'G',
+    Icon: TrendingUp,
     title: 'Mi Progreso',
     description:
       'Visualiza tu avance, identifica áreas de mejora y celebra tus logros alcanzados.',
@@ -92,34 +104,37 @@ export default function DashboardPage() {
       : null
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200 shadow-sm">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 bg-primary-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-base">T</span>
+              <GraduationCap size={18} className="text-white" />
             </div>
-            <span className="text-lg font-semibold text-gray-900">TutorIA Saber Pro</span>
+            <span className="text-lg font-semibold text-gray-900 dark:text-gray-100">TutorIA Saber Pro</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
             <Link
               to="/perfil"
-              className="text-sm font-medium text-gray-600 hover:text-primary-600 transition"
+              className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition"
             >
               Mi Perfil
             </Link>
             {user?.rol === 'admin' && (
               <Link
                 to="/admin/dashboard"
-                className="text-sm font-medium text-primary-600 hover:text-primary-700 border border-primary-100 hover:border-primary-500 rounded-lg px-3 py-1.5 transition"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 border border-primary-100 dark:border-primary-800 hover:border-primary-500 dark:hover:border-primary-600 rounded-lg px-3 py-1.5 transition"
               >
+                <Shield size={14} aria-hidden="true" />
                 Panel Admin
               </Link>
             )}
             <button
               onClick={handleLogout}
-              className="text-sm font-medium text-gray-600 hover:text-red-600 border border-gray-300 hover:border-red-300 rounded-lg px-4 py-1.5 transition focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 border border-gray-300 dark:border-gray-700 hover:border-red-300 dark:hover:border-red-800 rounded-lg px-4 py-1.5 transition focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
             >
+              <LogOut size={14} aria-hidden="true" />
               Cerrar Sesión
             </button>
           </div>
@@ -128,31 +143,28 @@ export default function DashboardPage() {
 
       <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
             Bienvenido, {user?.nombre ?? 'estudiante'}
           </h2>
-          <p className="mt-1 text-gray-500 text-sm">
+          <p className="mt-1 text-gray-500 dark:text-gray-400 text-sm">
             Selecciona un módulo para comenzar tu preparación para el Saber Pro.
           </p>
         </div>
 
-        {/* Mi Nivel card (HU-21) */}
         {!loadingProfile && (
           <div className="mb-6">
             {profile && !profile.diagnostico_realizado ? (
-              /* Diagnostic not done: yellow banner */
-              <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex items-center justify-between gap-4">
+              <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-4 flex items-center justify-between gap-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <span className="text-amber-700 font-bold text-sm">!</span>
+                  <div className="w-8 h-8 bg-amber-100 dark:bg-amber-900/40 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <AlertCircle size={16} className="text-amber-700 dark:text-amber-400" aria-hidden="true" />
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-amber-900">
+                    <p className="text-sm font-semibold text-amber-900 dark:text-amber-300">
                       Completa tu diagnóstico inicial
                     </p>
-                    <p className="text-xs text-amber-700 mt-0.5">
-                      Realiza el diagnóstico para personalizar tu plan de estudio y desbloquear
-                      todas las funciones.
+                    <p className="text-xs text-amber-700 dark:text-amber-400 mt-0.5">
+                      Realiza el diagnóstico para personalizar tu plan de estudio y desbloquear todas las funciones.
                     </p>
                   </div>
                 </div>
@@ -164,27 +176,21 @@ export default function DashboardPage() {
                 </Link>
               </div>
             ) : profile && profile.diagnostico_realizado ? (
-              /* Diagnostic done: level + score card */
-              <div className="bg-white border border-gray-200 rounded-2xl shadow-sm p-5 flex items-center justify-between gap-4">
+              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm p-5 flex items-center justify-between gap-4">
                 <div>
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">
+                  <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1.5">
                     Mi Nivel
                   </p>
-                  <span
-                    className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${nivelDisplay.badgeClass}`}
-                  >
+                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${nivelDisplay.badgeClass}`}>
                     {nivelDisplay.label}
                   </span>
                 </div>
                 {puntajePct !== null && (
                   <div className="text-right">
-                    <p className="text-xs font-medium text-gray-500 mb-1">Puntaje diagnóstico</p>
-                    <p className="text-2xl font-extrabold text-gray-900">{puntajePct}%</p>
-                    <div className="mt-1.5 h-1.5 w-24 bg-gray-200 rounded-full overflow-hidden ml-auto">
-                      <div
-                        className="h-full bg-primary-500 rounded-full transition-all"
-                        style={{ width: `${puntajePct}%` }}
-                      />
+                    <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Puntaje diagnóstico</p>
+                    <p className="text-2xl font-extrabold text-gray-900 dark:text-gray-100">{puntajePct}%</p>
+                    <div className="mt-1.5 h-1.5 w-24 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden ml-auto">
+                      <div className="h-full bg-primary-500 rounded-full transition-all" style={{ width: `${puntajePct}%` }} />
                     </div>
                   </div>
                 )}
@@ -193,38 +199,33 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {/* Navigation cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {cards.map((card, index) => {
             const isDiagnostico = card.path === '/diagnostico'
             return (
               <div
                 key={card.title}
-                className={`bg-white rounded-2xl border shadow-sm p-6 flex flex-col gap-4 hover:shadow-md transition ${
+                className={`bg-white dark:bg-gray-900 rounded-2xl border shadow-sm p-6 flex flex-col gap-4 hover:shadow-md transition ${
                   isDiagnostico && index === 0
-                    ? 'border-primary-200 ring-1 ring-primary-100'
-                    : 'border-gray-200'
+                    ? 'border-primary-200 dark:border-primary-800 ring-1 ring-primary-100 dark:ring-primary-900'
+                    : 'border-gray-200 dark:border-gray-700'
                 }`}
               >
-                <div
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center text-lg font-bold ${
-                    isDiagnostico
-                      ? 'bg-primary-100 text-primary-700'
-                      : 'bg-primary-50 text-primary-600'
-                  }`}
-                >
-                  {card.icon}
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                  isDiagnostico ? 'bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-400' : 'bg-primary-50 dark:bg-primary-900/20 text-primary-600 dark:text-primary-400'
+                }`}>
+                  <card.Icon size={24} aria-hidden="true" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-base font-semibold text-gray-900">{card.title}</h3>
-                  <p className="mt-1 text-sm text-gray-500 leading-relaxed">{card.description}</p>
+                  <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100">{card.title}</h3>
+                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{card.description}</p>
                 </div>
                 <Link
                   to={card.path}
                   className={`w-full text-sm font-medium py-2 px-4 rounded-lg transition text-center focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 ${
                     isDiagnostico && index === 0
                       ? 'bg-primary-600 hover:bg-primary-700 text-white border border-primary-600'
-                      : 'border border-primary-100 bg-primary-50 text-primary-700 hover:bg-primary-100'
+                      : 'border border-primary-100 dark:border-primary-900 bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-400 hover:bg-primary-100 dark:hover:bg-primary-900/40'
                   }`}
                 >
                   Ir al módulo

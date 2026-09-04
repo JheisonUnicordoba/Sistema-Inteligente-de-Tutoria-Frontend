@@ -10,6 +10,7 @@ import AdminUsuarios from './pages/admin/AdminUsuarios'
 import AdminPreguntas from './pages/admin/AdminPreguntas'
 import AdminEvaluaciones from './pages/admin/AdminEvaluaciones'
 import AdminReportes from './pages/admin/AdminReportes'
+import AdminPerfilUsuario from './pages/admin/AdminPerfilUsuario'
 import DiagnosticoPage from './pages/DiagnosticoPage'
 import TutoriaPage from './pages/TutoriaPage'
 import EvaluacionPage from './pages/EvaluacionPage'
@@ -17,9 +18,14 @@ import ProgresoPage from './pages/ProgresoPage'
 import ReportePage from './pages/ReportePage'
 import HistorialPage from './pages/HistorialPage'
 import ProtectedRoute from './components/ProtectedRoute'
+import { ToastProvider } from './contexts/ToastContext'
+import ToastContainer from './components/ToastContainer'
+import { ThemeProvider } from './contexts/ThemeContext'
 
 export default function App() {
   return (
+    <ThemeProvider>
+    <ToastProvider>
     <AuthProvider>
       <BrowserRouter>
         <Routes>
@@ -28,7 +34,7 @@ export default function App() {
           <Route
             path="/"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute studentOnly>
                 <DashboardPage />
               </ProtectedRoute>
             }
@@ -36,7 +42,7 @@ export default function App() {
           <Route
             path="/dashboard"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute studentOnly>
                 <DashboardPage />
               </ProtectedRoute>
             }
@@ -52,7 +58,7 @@ export default function App() {
           <Route
             path="/diagnostico"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute studentOnly>
                 <DiagnosticoPage />
               </ProtectedRoute>
             }
@@ -60,7 +66,7 @@ export default function App() {
           <Route
             path="/tutoria"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute studentOnly>
                 <TutoriaPage />
               </ProtectedRoute>
             }
@@ -68,7 +74,7 @@ export default function App() {
           <Route
             path="/evaluacion"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute studentOnly>
                 <EvaluacionPage />
               </ProtectedRoute>
             }
@@ -114,9 +120,17 @@ export default function App() {
             }
           />
           <Route
+            path="/admin/usuarios/:id/perfil"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <AdminPerfilUsuario />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/progreso"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute studentOnly>
                 <ProgresoPage />
               </ProtectedRoute>
             }
@@ -124,7 +138,7 @@ export default function App() {
           <Route
             path="/reporte"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute studentOnly>
                 <ReportePage />
               </ProtectedRoute>
             }
@@ -132,7 +146,7 @@ export default function App() {
           <Route
             path="/historial"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute studentOnly>
                 <HistorialPage />
               </ProtectedRoute>
             }
@@ -141,5 +155,8 @@ export default function App() {
         </Routes>
       </BrowserRouter>
     </AuthProvider>
+    <ToastContainer />
+    </ToastProvider>
+    </ThemeProvider>
   )
 }

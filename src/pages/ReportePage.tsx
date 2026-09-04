@@ -35,7 +35,7 @@ function SkeletonBlock({ lines = 3 }: { lines?: number }) {
   return (
     <div className="space-y-2">
       {Array.from({ length: lines }).map((_, i) => (
-        <div key={i} className="h-4 bg-gray-200 rounded animate-pulse" style={{ width: i === lines - 1 ? '60%' : '100%' }} />
+        <div key={i} className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" style={{ width: i === lines - 1 ? '60%' : '100%' }} />
       ))}
     </div>
   )
@@ -85,17 +85,17 @@ export default function ReportePage() {
     : []
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200 shadow-sm">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 bg-primary-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-base">T</span>
             </div>
-            <span className="text-lg font-semibold text-gray-900">TutorIA Saber Pro</span>
+            <span className="text-lg font-semibold text-gray-900 dark:text-gray-100">TutorIA Saber Pro</span>
           </div>
           <div className="flex items-center gap-3">
-            <Link to="/dashboard" className="text-sm font-medium text-gray-600 hover:text-primary-600 transition">
+            <Link to="/dashboard" className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition">
               Dashboard
             </Link>
             {user?.rol === 'admin' && (
@@ -105,7 +105,7 @@ export default function ReportePage() {
             )}
             <button
               onClick={handleLogout}
-              className="text-sm font-medium text-gray-600 hover:text-red-600 border border-gray-300 hover:border-red-300 rounded-lg px-4 py-1.5 transition focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
+              className="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 border border-gray-300 dark:border-gray-600 hover:border-red-300 dark:hover:border-red-700 rounded-lg px-4 py-1.5 transition focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2"
             >
               Cerrar Sesión
             </button>
@@ -115,20 +115,20 @@ export default function ReportePage() {
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="mb-6">
-          <h2 className="text-2xl font-bold text-gray-900">Mi Reporte</h2>
-          <p className="mt-1 text-gray-500 text-sm">Análisis detallado de tu desempeño en Razonamiento Cuantitativo.</p>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Mi Reporte</h2>
+          <p className="mt-1 text-gray-500 dark:text-gray-400 text-sm">Análisis detallado de tu desempeño en Razonamiento Cuantitativo.</p>
         </div>
 
         {estado === 'cargando' && (
           <div className="space-y-6">
             {/* Skeleton for puntaje */}
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 flex flex-col items-center gap-3">
-              <div className="h-4 bg-gray-200 rounded animate-pulse w-40" />
-              <div className="h-16 w-32 bg-gray-200 rounded animate-pulse" />
+            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-8 flex flex-col items-center gap-3">
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-40" />
+              <div className="h-16 w-32 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
             </div>
             {['Resumen', 'Fortalezas', 'Áreas de Mejora', 'Plan Sugerido'].map((label) => (
-              <div key={label} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                <div className="h-3 bg-gray-200 rounded animate-pulse w-28 mb-4" />
+              <div key={label} className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded animate-pulse w-28 mb-4" />
                 <SkeletonBlock lines={4} />
               </div>
             ))}
@@ -136,9 +136,9 @@ export default function ReportePage() {
         )}
 
         {estado === 'error' && (
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 text-center">
-            <p className="text-gray-700 font-medium mb-2">Error al cargar el reporte</p>
-            <p className="text-sm text-gray-500 mb-5">Verifica tu conexión e intenta nuevamente.</p>
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-8 text-center">
+            <p className="text-gray-700 dark:text-gray-300 font-medium mb-2">Error al cargar el reporte</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">Verifica tu conexión e intenta nuevamente.</p>
             <button
               onClick={() => void fetchReporte()}
               className="bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold rounded-xl px-4 py-2.5"
@@ -149,12 +149,12 @@ export default function ReportePage() {
         )}
 
         {estado === 'sin_diagnostico' && (
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-10 text-center">
-            <div className="w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-10 text-center">
+            <div className="w-16 h-16 bg-amber-50 dark:bg-amber-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl font-bold text-amber-600">!</span>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Diagnóstico requerido</h3>
-            <p className="text-sm text-gray-500 mb-6 max-w-sm mx-auto">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Diagnóstico requerido</h3>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 max-w-sm mx-auto">
               Para ver tu reporte completo necesitas completar primero el diagnóstico inicial.
             </p>
             <Link
@@ -169,27 +169,27 @@ export default function ReportePage() {
         {estado === 'datos' && datos && (
           <div className="space-y-6">
             {/* Puntaje estimado */}
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 flex flex-col items-center gap-2">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Puntaje Saber Pro Estimado</p>
+            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-8 flex flex-col items-center gap-2">
+              <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Puntaje Saber Pro Estimado</p>
               <p className={`text-6xl font-extrabold ${puntajeColor(datos.puntaje_saber_pro_estimado)}`}>
                 {datos.puntaje_saber_pro_estimado}
               </p>
-              <p className="text-xs text-gray-400">sobre 300 puntos</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500">sobre 300 puntos</p>
             </div>
 
             {/* Resumen */}
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">Resumen</p>
-              <p className="text-sm text-gray-700 leading-relaxed">{datos.resumen}</p>
+            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+              <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Resumen</p>
+              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{datos.resumen}</p>
             </div>
 
             {/* Fortalezas */}
             {datos.fortalezas.length > 0 && (
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">Fortalezas</p>
+              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Fortalezas</p>
                 <ul className="space-y-2">
                   {datos.fortalezas.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                    <li key={i} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
                       <span className="mt-0.5 text-emerald-500 font-bold shrink-0">✓</span>
                       {item}
                     </li>
@@ -200,11 +200,11 @@ export default function ReportePage() {
 
             {/* Áreas de mejora */}
             {datos.areas_mejora.length > 0 && (
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">Áreas de Mejora</p>
+              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Áreas de Mejora</p>
                 <ul className="space-y-2">
                   {datos.areas_mejora.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                    <li key={i} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
                       <span className="mt-0.5 text-amber-500 font-bold shrink-0">!</span>
                       {item}
                     </li>
@@ -215,12 +215,12 @@ export default function ReportePage() {
 
             {/* Plan sugerido */}
             {datos.plan_sugerido.length > 0 && (
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">Plan Sugerido</p>
+              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Plan Sugerido</p>
                 <ol className="space-y-3">
                   {datos.plan_sugerido.map((paso, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-gray-700">
-                      <span className="w-6 h-6 rounded-full bg-primary-100 text-primary-700 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                    <li key={i} className="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300">
+                      <span className="w-6 h-6 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-400 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
                         {i + 1}
                       </span>
                       {paso}
@@ -232,8 +232,8 @@ export default function ReportePage() {
 
             {/* Mensaje motivacional */}
             {datos.mensaje_motivacional && (
-              <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-6">
-                <p className="text-sm text-indigo-700 italic leading-relaxed">
+              <div className="bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded-2xl p-6">
+                <p className="text-sm text-indigo-700 dark:text-indigo-300 italic leading-relaxed">
                   "{datos.mensaje_motivacional}"
                 </p>
               </div>
@@ -241,16 +241,16 @@ export default function ReportePage() {
 
             {/* Puntaje por tema */}
             {barData.length > 0 && (
-              <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">Puntaje por Tema</p>
+              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Puntaje por Tema</p>
                 <div className="space-y-3">
                   {barData.map(({ tema, puntaje }) => (
                     <div key={tema}>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm text-gray-700">{tema}</span>
-                        <span className="text-sm font-semibold text-gray-900">{puntaje}%</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">{tema}</span>
+                        <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{puntaje}%</span>
                       </div>
-                      <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                      <div className="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
                         <div
                           className={`h-full rounded-full transition-all ${barColor(puntaje)}`}
                           style={{ width: `${puntaje}%` }}
@@ -265,7 +265,7 @@ export default function ReportePage() {
             <div className="flex justify-start">
               <Link
                 to="/progreso"
-                className="bg-white border border-gray-300 text-gray-700 text-sm font-semibold rounded-xl px-4 py-2.5 hover:bg-gray-50 transition"
+                className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 text-sm font-semibold rounded-xl px-4 py-2.5 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
               >
                 Ver progreso detallado
               </Link>
