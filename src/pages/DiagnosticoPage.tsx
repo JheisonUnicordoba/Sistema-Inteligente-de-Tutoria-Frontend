@@ -82,8 +82,6 @@ function Spinner({ size = 8 }: { size?: number }) {
 // ─── Main Page ───────────────────────────────────────────────────────────────
 
 export default function DiagnosticoPage() {
-  const navigate = useNavigate()
-
   const [view, setView] = useState<View>('bienvenida')
   const [sesionId, setSesionId] = useState<number | null>(null)
   const [preguntaActual, setPreguntaActual] = useState<PreguntaOut | null>(null)
