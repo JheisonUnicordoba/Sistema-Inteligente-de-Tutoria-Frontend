@@ -31,7 +31,8 @@ interface Retroalimentacion {
 
 interface ResumenTutoria {
   sesion_id: number
-  puntaje: number
+  puntaje: number       // IRT score 0-300
+  pct_correctas: number // % of correct answers
   correctas: number
   total: number
   nivel_final: string
@@ -512,7 +513,8 @@ export default function TutoriaPage() {
 
   // ─── View: Resumen (HU-14) ───────────────────────────────────────────────
   if (view === 'resumen' && resumen) {
-    const puntajePct = Math.round(resumen.puntaje)
+    const puntajeIRT = Math.round(resumen.puntaje)
+    const pctCorrectasDisplay = Math.round(resumen.pct_correctas)
 
     let comparativaClass = 'bg-blue-50 border-blue-200 text-blue-800'
     if (resumen.nivel_final === 'Avanzado') comparativaClass = 'bg-emerald-50 border-emerald-200 text-emerald-800'
@@ -526,13 +528,14 @@ export default function TutoriaPage() {
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">Resumen de Sesión</h1>
 
-            {/* Score circle */}
-            <div className="inline-flex items-center justify-center w-32 h-32 rounded-full bg-primary-50 dark:bg-primary-900/30 border-4 border-primary-200 dark:border-primary-800 mb-4">
-              <span className="text-4xl font-extrabold text-primary-700 dark:text-primary-400">{puntajePct}%</span>
+            {/* IRT score circle */}
+            <div className="inline-flex flex-col items-center justify-center w-36 h-36 rounded-full bg-primary-50 dark:bg-primary-900/30 border-4 border-primary-200 dark:border-primary-800 mb-4">
+              <span className="text-4xl font-extrabold text-primary-700 dark:text-primary-400">{puntajeIRT}</span>
+              <span className="text-xs font-semibold text-primary-500 dark:text-primary-500 mt-0.5">/ 300</span>
             </div>
 
             <p className="text-base font-semibold text-gray-700 dark:text-gray-300 mb-1">
-              {resumen.correctas}/{resumen.total} correctas
+              {resumen.correctas}/{resumen.total} correctas ({pctCorrectasDisplay}%)
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-400">{resumen.duracion_min} min de sesión</p>
           </div>

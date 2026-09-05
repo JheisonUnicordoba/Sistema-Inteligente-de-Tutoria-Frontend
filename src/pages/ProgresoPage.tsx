@@ -214,7 +214,7 @@ export default function ProgresoPage() {
                       stroke="#6366f1"
                       strokeWidth="8"
                       strokeDasharray={`${2 * Math.PI * 32}`}
-                      strokeDashoffset={`${2 * Math.PI * 32 * (1 - (datos.puntaje_promedio ?? 0) / 100)}`}
+                      strokeDashoffset={`${2 * Math.PI * 32 * (1 - (datos.puntaje_promedio ?? 0) / 300)}`}
                       strokeLinecap="round"
                     />
                   </svg>
@@ -222,6 +222,7 @@ export default function ProgresoPage() {
                     {datos.puntaje_promedio !== null ? Math.round(datos.puntaje_promedio) : '—'}
                   </span>
                 </div>
+                <p className="text-xs text-gray-400 dark:text-gray-500">/ 300 pts Saber Pro</p>
               </div>
 
               <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 flex flex-col items-center gap-2">
