@@ -165,7 +165,7 @@ export default function ProfilePage() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
       {/* Header */}
       <header className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-sm">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link to="/dashboard" className="flex items-center gap-3 group">
             <div className="w-9 h-9 bg-primary-600 rounded-lg flex items-center justify-center">
               <GraduationCap size={18} className="text-white" aria-hidden="true" />
@@ -192,7 +192,7 @@ export default function ProfilePage() {
         </div>
       </header>
 
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="mb-6">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Mi Perfil</h1>
           <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
@@ -225,8 +225,8 @@ export default function ProfilePage() {
           </div>
         )}
 
-        <div className="space-y-6">
-          {/* Personal info card */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+          {/* LEFT — Personal info */}
           <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
             <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-4">Información Personal</h2>
 
@@ -357,127 +357,130 @@ export default function ProfilePage() {
             ) : null}
           </div>
 
-          {/* Password card */}
-          <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
-            <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">Cambiar Contraseña</h2>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-5">
-              Usa una contraseña de al menos 6 caracteres con letras y números.
-            </p>
+          {/* RIGHT — Password + Stats */}
+          <div className="space-y-6">
+            {/* Password card */}
+            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+              <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">Cambiar Contraseña</h2>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mb-5">
+                Usa una contraseña de al menos 6 caracteres con letras y números.
+              </p>
 
-            {pwError && (
-              <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm rounded-lg">
-                {pwError}
+              {pwError && (
+                <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 text-sm rounded-lg">
+                  {pwError}
+                </div>
+              )}
+
+              <form onSubmit={(e) => void handleChangePassword(e)} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">
+                    Contraseña actual
+                  </label>
+                  <input
+                    type="password"
+                    value={pwActual}
+                    onChange={(e) => setPwActual(e.target.value)}
+                    required
+                    placeholder="••••••••"
+                    className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">
+                    Nueva contraseña
+                  </label>
+                  <input
+                    type="password"
+                    value={pwNueva}
+                    onChange={(e) => setPwNueva(e.target.value)}
+                    required
+                    placeholder="••••••••"
+                    className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">
+                    Confirmar nueva contraseña
+                  </label>
+                  <input
+                    type="password"
+                    value={pwConfirm}
+                    onChange={(e) => setPwConfirm(e.target.value)}
+                    required
+                    placeholder="••••••••"
+                    className={`w-full rounded-lg border px-3 py-2 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition ${
+                      pwConfirm && pwConfirm !== pwNueva
+                        ? 'border-red-400 focus:border-red-400'
+                        : 'border-gray-300 dark:border-gray-600 focus:border-primary-500'
+                    }`}
+                  />
+                  {pwConfirm && pwConfirm !== pwNueva && (
+                    <p className="mt-1 text-xs text-red-600 dark:text-red-400">Las contraseñas no coinciden</p>
+                  )}
+                </div>
+                <div className="pt-1">
+                  <button
+                    type="submit"
+                    disabled={savingPw}
+                    className="bg-primary-600 hover:bg-primary-700 disabled:opacity-60 text-white text-sm font-semibold px-5 py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                  >
+                    {savingPw ? 'Guardando...' : 'Actualizar Contraseña'}
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            {/* Stats card — only for students */}
+            {(isLoadingProfile || profile?.rol === 'estudiante') && (
+              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-4">Mi Desempeño</h2>
+
+                {isLoadingProfile ? (
+                  <div className="grid grid-cols-3 gap-3">
+                    {[1, 2, 3].map((i) => (
+                      <SkeletonBlock key={i} className="h-20 rounded-xl" />
+                    ))}
+                  </div>
+                ) : profile ? (
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4">
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
+                        Nivel
+                      </p>
+                      <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${nivelDisplay.className}`}>
+                        {nivelDisplay.label}
+                      </span>
+                    </div>
+
+                    <div className="rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4">
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
+                        Diagnóstico
+                      </p>
+                      {puntajePct !== null ? (
+                        <div>
+                          <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{puntajePct}%</p>
+                          <div className="mt-1.5 h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div className="h-full bg-primary-500 rounded-full transition-all" style={{ width: `${puntajePct}%` }} />
+                          </div>
+                        </div>
+                      ) : (
+                        <p className="text-xs text-gray-400 dark:text-gray-500 italic">Sin realizar</p>
+                      )}
+                    </div>
+
+                    <div className="rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4">
+                      <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
+                        Sesiones
+                      </p>
+                      <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{profile.total_sesiones}</p>
+                      <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">completadas</p>
+                    </div>
+                  </div>
+                ) : null}
               </div>
             )}
-
-            <form onSubmit={(e) => void handleChangePassword(e)} className="space-y-4">
-              <div>
-                <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">
-                  Contraseña actual
-                </label>
-                <input
-                  type="password"
-                  value={pwActual}
-                  onChange={(e) => setPwActual(e.target.value)}
-                  required
-                  placeholder="••••••••"
-                  className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">
-                  Nueva contraseña
-                </label>
-                <input
-                  type="password"
-                  value={pwNueva}
-                  onChange={(e) => setPwNueva(e.target.value)}
-                  required
-                  placeholder="••••••••"
-                  className="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-3 py-2 text-sm text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">
-                  Confirmar nueva contraseña
-                </label>
-                <input
-                  type="password"
-                  value={pwConfirm}
-                  onChange={(e) => setPwConfirm(e.target.value)}
-                  required
-                  placeholder="••••••••"
-                  className={`w-full rounded-lg border px-3 py-2 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 transition ${
-                    pwConfirm && pwConfirm !== pwNueva
-                      ? 'border-red-400 focus:border-red-400'
-                      : 'border-gray-300 dark:border-gray-600 focus:border-primary-500'
-                  }`}
-                />
-                {pwConfirm && pwConfirm !== pwNueva && (
-                  <p className="mt-1 text-xs text-red-600 dark:text-red-400">Las contraseñas no coinciden</p>
-                )}
-              </div>
-              <div className="pt-1">
-                <button
-                  type="submit"
-                  disabled={savingPw}
-                  className="bg-primary-600 hover:bg-primary-700 disabled:opacity-60 text-white text-sm font-semibold px-5 py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-                >
-                  {savingPw ? 'Guardando...' : 'Actualizar Contraseña'}
-                </button>
-              </div>
-            </form>
           </div>
-
-          {/* Stats card — only for students */}
-          {(isLoadingProfile || profile?.rol === 'estudiante') && (
-            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
-              <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-4">Mi Desempeño</h2>
-
-              {isLoadingProfile ? (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  {[1, 2, 3].map((i) => (
-                    <SkeletonBlock key={i} className="h-20 rounded-xl" />
-                  ))}
-                </div>
-              ) : profile ? (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4">
-                    <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
-                      Nivel Actual
-                    </p>
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${nivelDisplay.className}`}>
-                      {nivelDisplay.label}
-                    </span>
-                  </div>
-
-                  <div className="rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4">
-                    <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
-                      Diagnóstico
-                    </p>
-                    {puntajePct !== null ? (
-                      <div>
-                        <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{puntajePct}%</p>
-                        <div className="mt-1.5 h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                          <div className="h-full bg-primary-500 rounded-full transition-all" style={{ width: `${puntajePct}%` }} />
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="text-sm text-gray-400 dark:text-gray-500 italic">Sin realizar</p>
-                    )}
-                  </div>
-
-                  <div className="rounded-xl border border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-4">
-                    <p className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
-                      Sesiones
-                    </p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{profile.total_sesiones}</p>
-                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">sesiones completadas</p>
-                  </div>
-                </div>
-              ) : null}
-            </div>
-          )}
         </div>
       </main>
     </div>

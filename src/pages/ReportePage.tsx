@@ -113,7 +113,7 @@ export default function ReportePage() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="mb-6">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Mi Reporte</h2>
           <p className="mt-1 text-gray-500 dark:text-gray-400 text-sm">Análisis detallado de tu desempeño en Razonamiento Cuantitativo.</p>
@@ -168,99 +168,126 @@ export default function ReportePage() {
 
         {estado === 'datos' && datos && (
           <div className="space-y-6">
-            {/* Puntaje estimado */}
-            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-8 flex flex-col items-center gap-2">
-              <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Puntaje Saber Pro Estimado</p>
-              <p className={`text-6xl font-extrabold ${puntajeColor(datos.puntaje_saber_pro_estimado)}`}>
-                {datos.puntaje_saber_pro_estimado}
-              </p>
-              <p className="text-xs text-gray-400 dark:text-gray-500">sobre 300 puntos</p>
-            </div>
-
-            {/* Resumen */}
-            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
-              <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Resumen</p>
-              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{datos.resumen}</p>
-            </div>
-
-            {/* Fortalezas */}
-            {datos.fortalezas.length > 0 && (
-              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
-                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Fortalezas</p>
-                <ul className="space-y-2">
-                  {datos.fortalezas.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
-                      <span className="mt-0.5 text-emerald-500 font-bold shrink-0">✓</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Áreas de mejora */}
-            {datos.areas_mejora.length > 0 && (
-              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
-                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Áreas de Mejora</p>
-                <ul className="space-y-2">
-                  {datos.areas_mejora.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
-                      <span className="mt-0.5 text-amber-500 font-bold shrink-0">!</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Plan sugerido */}
-            {datos.plan_sugerido.length > 0 && (
-              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
-                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Plan Sugerido</p>
-                <ol className="space-y-3">
-                  {datos.plan_sugerido.map((paso, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300">
-                      <span className="w-6 h-6 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-400 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
-                        {i + 1}
-                      </span>
-                      {paso}
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            )}
-
-            {/* Mensaje motivacional */}
-            {datos.mensaje_motivacional && (
-              <div className="bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded-2xl p-6">
-                <p className="text-sm text-indigo-700 dark:text-indigo-300 italic leading-relaxed">
-                  "{datos.mensaje_motivacional}"
+            {/* Puntaje hero — full width */}
+            <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-8 flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-12">
+              <div className="text-center">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">Puntaje Saber Pro Estimado</p>
+                <p className={`text-6xl font-extrabold ${puntajeColor(datos.puntaje_saber_pro_estimado)}`}>
+                  {datos.puntaje_saber_pro_estimado}
                 </p>
+                <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">sobre 300 puntos</p>
               </div>
-            )}
-
-            {/* Puntaje por tema */}
-            {barData.length > 0 && (
-              <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
-                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Puntaje por Tema</p>
-                <div className="space-y-3">
-                  {barData.map(({ tema, puntaje }) => (
-                    <div key={tema}>
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm text-gray-700 dark:text-gray-300">{tema}</span>
-                        <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{puntaje}%</span>
-                      </div>
-                      <div className="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
-                        <div
-                          className={`h-full rounded-full transition-all ${barColor(puntaje)}`}
-                          style={{ width: `${puntaje}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))}
+              <div className="flex gap-8 text-center">
+                <div>
+                  <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">Nivel</p>
+                  <p className="text-lg font-bold text-gray-900 dark:text-gray-100 capitalize">{datos.nivel_actual}</p>
                 </div>
+                <div>
+                  <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">Sesiones</p>
+                  <p className="text-lg font-bold text-gray-900 dark:text-gray-100">{datos.sesiones_completadas}</p>
+                </div>
+                {datos.puntaje_promedio !== null && (
+                  <div>
+                    <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">Promedio</p>
+                    <p className="text-lg font-bold text-gray-900 dark:text-gray-100">{Math.round(datos.puntaje_promedio)}%</p>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
+
+            {/* Two-column content */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+              {/* LEFT col */}
+              <div className="space-y-6">
+                {/* Resumen */}
+                <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                  <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Resumen</p>
+                  <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{datos.resumen}</p>
+                </div>
+
+                {/* Puntaje por tema */}
+                {barData.length > 0 && (
+                  <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                    <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Puntaje por Tema</p>
+                    <div className="space-y-3">
+                      {barData.map(({ tema, puntaje }) => (
+                        <div key={tema}>
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-sm text-gray-700 dark:text-gray-300">{tema}</span>
+                            <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">{puntaje}%</span>
+                          </div>
+                          <div className="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                            <div
+                              className={`h-full rounded-full transition-all ${barColor(puntaje)}`}
+                              style={{ width: `${puntaje}%` }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Mensaje motivacional */}
+                {datos.mensaje_motivacional && (
+                  <div className="bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded-2xl p-6">
+                    <p className="text-sm text-indigo-700 dark:text-indigo-300 italic leading-relaxed">
+                      "{datos.mensaje_motivacional}"
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* RIGHT col */}
+              <div className="space-y-6">
+                {/* Fortalezas */}
+                {datos.fortalezas.length > 0 && (
+                  <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                    <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Fortalezas</p>
+                    <ul className="space-y-2">
+                      {datos.fortalezas.map((item, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
+                          <span className="mt-0.5 text-emerald-500 font-bold shrink-0">✓</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Áreas de mejora */}
+                {datos.areas_mejora.length > 0 && (
+                  <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                    <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Áreas de Mejora</p>
+                    <ul className="space-y-2">
+                      {datos.areas_mejora.map((item, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
+                          <span className="mt-0.5 text-amber-500 font-bold shrink-0">!</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Plan sugerido */}
+                {datos.plan_sugerido.length > 0 && (
+                  <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6">
+                    <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">Plan Sugerido</p>
+                    <ol className="space-y-3">
+                      {datos.plan_sugerido.map((paso, i) => (
+                        <li key={i} className="flex items-start gap-3 text-sm text-gray-700 dark:text-gray-300">
+                          <span className="w-6 h-6 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-400 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                            {i + 1}
+                          </span>
+                          {paso}
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                )}
+              </div>
+            </div>
 
             <div className="flex justify-start">
               <Link
